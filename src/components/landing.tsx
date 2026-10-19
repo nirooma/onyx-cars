@@ -20,7 +20,7 @@ export function Landing() {
         <Link href="/" className="text-shell" aria-label="NightGuard">
           <Logo />
         </Link>
-        <a className="btn btn-primary" href={pilotMail}>
+        <a className="btn btn-primary nav-cta" href={pilotMail}>
           {t.cta} [TBD]
         </a>
       </header>

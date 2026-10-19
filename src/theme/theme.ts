@@ -17,7 +17,8 @@ export const theme = {
     shell: "#EDEDEB",
     shellShade: "#C9CACC",
     skirt: "#141416",
-    page: "#0B0B0D",
+    /** Sampled from the power-on film corner, rgb(11, 10, 13). */
+    page: "#0B0A0D",
     card: "#1C1D20",
     lightBar: "#F2F6FF",
     alert: "#E5262B",
