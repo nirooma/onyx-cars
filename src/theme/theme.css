@@ -828,6 +828,7 @@
 .cap-frame {
   position: relative;
   width: 100%;
+  container-type: inline-size;
   /* Source stills are 1280×720. Matching the ratio keeps overlay % locked to the subjects. */
   aspect-ratio: 16 / 9;
   background: #141416;
@@ -886,6 +887,13 @@
   top: 8px;
 }
 
+/* Boxes that start at the top of the frame keep their label underneath. */
+.cap-tag.cap-tag-below {
+  top: calc(100% + 6px);
+  left: 0;
+  right: auto;
+}
+
 .cap-hud {
   position: absolute;
   top: 14px;
@@ -899,15 +907,16 @@
   border-radius: 50%;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  background: rgba(11, 10, 13, 0.28);
-  -webkit-mask-image: radial-gradient(ellipse at center, #000 52%, transparent 78%);
-  mask-image: radial-gradient(ellipse at center, #000 52%, transparent 78%);
+  background: rgba(11, 10, 13, 0.35);
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 68%, transparent 100%);
+  mask-image: radial-gradient(ellipse at center, #000 68%, transparent 100%);
 }
 
 .cap-lock {
   position: absolute;
   top: 0;
   right: 0;
+  transform: translate(72%, 0);
   width: 44px;
   height: 44px;
   display: flex;
@@ -1026,6 +1035,39 @@
 
   .cap-pill-label {
     display: none;
+  }
+}
+
+/* Narrow frames (phones, and the two-column layout around 1024) crowd the still. */
+@container (max-width: 600px) {
+  .cap-tag,
+  .cap-hud {
+    font-size: 9px;
+  }
+
+  .cap-tag {
+    padding: 2px 5px;
+  }
+
+  .cap-hud {
+    top: 8px;
+    left: 8px;
+  }
+
+  .cap-lock {
+    width: 28px;
+    height: 28px;
+  }
+
+  .cap-lock svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .cap-box .cap-tag:not(.cap-tag-in) {
+    top: calc(100% + 4px);
+    left: 0;
+    right: auto;
   }
 }
 

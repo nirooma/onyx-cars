@@ -236,10 +236,10 @@ export function Capabilities() {
               {panel.kind === "ai" ? (
                 <div className="cap-overlay" aria-hidden="true">
                   <span className="cap-hud cap-mono">Live · On-device</span>
-                  <div className="cap-box" style={{ left: "33%", top: "8%", width: "13%", height: "50%" }}>
-                    <span className="cap-tag cap-mono">Person</span>
+                  <div className="cap-box" style={{ left: "34.3%", top: "2.6%", width: "9.2%", height: "42.6%" }}>
+                    <span className="cap-tag cap-tag-below cap-mono">Person</span>
                   </div>
-                  <div className="cap-box ignore" style={{ left: "11%", top: "45%", width: "12%", height: "14%" }}>
+                  <div className="cap-box ignore" style={{ left: "16.6%", top: "37%", width: "8.2%", height: "16.8%" }}>
                     <span className="cap-tag cap-mono">Pet · ignored</span>
                   </div>
                   <div className="cap-box ignore" style={{ left: "72%", top: "1%", width: "27%", height: "55%" }}>
@@ -249,9 +249,9 @@ export function Capabilities() {
               ) : null}
               {panel.kind === "privacy" ? (
                 <div className="cap-overlay" aria-hidden="true">
-                  <div className="cap-face" style={{ left: "17%", top: "8%", width: "12%", height: "17%" }} />
-                  <div className="cap-box" style={{ left: "15%", top: "8%", width: "16%", height: "50%" }}>
-                    <span className="cap-tag cap-mono">Person · face masked</span>
+                  <div className="cap-face" style={{ left: "18.9%", top: "0.2%", width: "4.6%", height: "7.4%" }} />
+                  <div className="cap-box" style={{ left: "16.8%", top: "0.4%", width: "10%", height: "44%" }}>
+                    <span className="cap-tag cap-tag-below cap-mono">Person · face masked</span>
                     <div className="cap-lock">
                       <svg viewBox="0 0 24 24" fill="none" stroke="#F2F6FF" strokeWidth="1.8" aria-hidden="true">
                         <rect x="5" y="11" width="14" height="10" rx="2" />
