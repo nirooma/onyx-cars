@@ -153,7 +153,7 @@ export function Capabilities() {
                 <div className="cap-box ignore cap-box-pet" style={{ left: "16.6%", top: "37%", width: "8.2%", height: "16.8%", animationDelay: "0.35s" }}>
                   <span className="cap-tag cap-mono">Pet · ignored</span>
                 </div>
-                <div className="cap-box ignore" style={{ left: "75.5%", top: "0%", width: "24%", height: "48%", animationDelay: "0.5s" }}>
+                <div className="cap-box ignore" style={{ left: "73%", top: "0%", width: "27%", height: "53.6%", animationDelay: "0.5s" }}>
                   <span className="cap-tag cap-tag-end cap-mono">Curtain · ignored</span>
                 </div>
               </div>
