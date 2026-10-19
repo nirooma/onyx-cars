@@ -44,6 +44,15 @@ Product design owns two files. Components do not hard-code colors, fonts, or med
 
 `heroMedia` names the power-on films, the dark posters, and the lit stills. `selected-design.jpg` remains the earlier studio still and is not the hero fallback. The open-shell sequence scrubs with scroll; reduced motion shows `exploded-view.jpg` instead. Do not add part labels or component specs to that section.
 
+## Logo, icons and share image
+
+The Stillward logo is final (v1.0, approved by product design). `brand` in [`src/theme/brand.ts`](src/theme/brand.ts) names every file.
+
+- Header: `public/brand/stillward-nav-light-on-dark.svg` (nav lockup, no glow), 20px tall on mobile and 22px on desktop, never under 20px, with at least half a cap height of clear space. It links to `/`.
+- Icons: `favicon.svg` (SVG icon), `favicon-32.png` (PNG fallback), `apple-touch-icon.png` (180), and `icon-512.png` in `/manifest.webmanifest` (`src/app/manifest.ts`). Theme colour `#0B0A0D`.
+- Share image: `public/og.jpg`, 1200x630, the lit final frame with the glow primary logo at a 44px cap height. It is used for `og:image` and `twitter:image` (`summary_large_image`). The absolute URL uses `NEXT_PUBLIC_SITE_URL` (default `http://localhost:4317`), so set it at build time for a real host.
+- Do not use the glow logo below 32px tall, and do not recolour the light bar or the red marks.
+
 ## Drop in the 360° frames
 
 `rotateMedia` in [`src/theme/images.ts`](src/theme/images.ts) is the only config for the turn after the hero. The section is not rendered until every file below exists, so the live page stays the signed-off hero. Do not add stand-in frames.

@@ -24,7 +24,7 @@ export function Landing() {
           Skip to content
         </a>
         <header className="landing-nav">
-          <Link href="/" className="text-shell" aria-label="Stillward">
+          <Link href="/" className="brand-link">
             <Logo />
           </Link>
           <a className="btn btn-primary nav-cta" href={pilotMail}>

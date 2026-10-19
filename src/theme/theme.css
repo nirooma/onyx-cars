@@ -131,6 +131,30 @@
   color: var(--ng-shell);
 }
 
+/* Nav logo: 20px tall on mobile, 22px on desktop (never under 20px).
+   Clear space is half the cap height (cap = 100/147.61 of the height), ~7px; the link pads 8px. */
+.brand-link {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  padding: 8px;
+  margin: -8px;
+}
+
+.brand-logo {
+  display: block;
+  width: auto;
+  height: 20px;
+  min-height: 20px;
+  max-width: none;
+}
+
+@media (min-width: 769px) {
+  .brand-logo {
+    height: 22px;
+  }
+}
+
 .hero-screen {
   position: relative;
   min-height: 100svh;
