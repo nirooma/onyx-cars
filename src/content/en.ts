@@ -4,7 +4,7 @@ const en: Dictionary = {
   meta: {
     title: "Stillward · It stands guard at night",
     description:
-      "A standalone night guard for villas, cottages, and ground-floor homes. It learns an ordinary night in the house, and when you are away it answers a person with light, a siren, and a photo on your phone. No face recognition. A beta.",
+      "A standalone night guard for villas, cottages, and ground-floor homes. It learns an ordinary night in the house, and when you are away it answers a person with light, a siren, and a photo on your phone. A beta.",
   },
   nav: {
     skip: "Skip to content",
@@ -23,7 +23,7 @@ const en: Dictionary = {
   hero: {
     eyebrow: "For villas, cottages, and ground-floor homes",
     title: "It stands guard at night.",
-    sub: "It learns a normal night in your home, and when you are away it answers a person with light, a siren, and a photo on your phone, with no face recognition.",
+    sub: "It learns a normal night in your home, and when you are away it answers a person with light, a siren, and a photo on your phone.",
     cta: "Join the beta",
     secondary: "How it works",
     note: "A working name. No price, no certification, and no launch date.",
