@@ -1,0 +1,106 @@
+/* Structural classes. Colors come from src/theme/theme.ts variables. */
+
+.chamfer {
+  clip-path: polygon(
+    var(--ng-chamfer) 0,
+    calc(100% - var(--ng-chamfer)) 0,
+    100% var(--ng-chamfer),
+    100% calc(100% - var(--ng-chamfer)),
+    calc(100% - var(--ng-chamfer)) 100%,
+    var(--ng-chamfer) 100%,
+    0 calc(100% - var(--ng-chamfer)),
+    0 var(--ng-chamfer)
+  );
+}
+
+.light-bar {
+  height: 2px;
+  width: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--ng-light) 18%,
+    var(--ng-light) 82%,
+    transparent
+  );
+  box-shadow: var(--ng-glow);
+}
+
+.hallway-scrim {
+  background: linear-gradient(
+    90deg,
+    var(--ng-page) 0%,
+    color-mix(in srgb, var(--ng-page) 78%, transparent) 46%,
+    transparent 74%
+  );
+}
+
+.packet-blur {
+  background:
+    radial-gradient(circle at 32% 42%, var(--ng-shade), transparent 58%),
+    radial-gradient(circle at 68% 60%, var(--ng-card), transparent 52%);
+  filter: blur(14px);
+}
+
+.facet-field {
+  background-image: repeating-linear-gradient(
+    -28deg,
+    transparent 0,
+    transparent 78px,
+    var(--ng-facet) 78px,
+    var(--ng-facet) 79px
+  );
+}
+
+.kicker {
+  color: var(--ng-shade);
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+[dir="rtl"] .kicker {
+  letter-spacing: 0.04em;
+  text-transform: none;
+}
+
+.concept-note {
+  color: var(--ng-shade);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+[dir="rtl"] .concept-note {
+  letter-spacing: 0.02em;
+  text-transform: none;
+}
+
+.tbd {
+  display: inline-block;
+  margin-inline: 0.2em;
+  border: 1px dashed var(--ng-shade);
+  padding: 0 0.35em;
+  font-family: var(--font-latin), sans-serif;
+  font-size: 0.82em;
+  letter-spacing: 0.06em;
+  line-height: 1.5;
+  vertical-align: baseline;
+}
+
+::selection {
+  background: var(--ng-shell);
+  color: var(--ng-skirt);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
