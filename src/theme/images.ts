@@ -62,8 +62,8 @@ export function posterSrc(id: "heroVideo" | "explodeVideo") {
  * Power-on hero. Swap the film by editing this object and the files it
  * names. The player reads breakpoints, posters, and lightOnTime from here.
  *
- * Desktop sources: WebM first, MP4 fallback. Mobile (max-width 768px) is
- * the portrait MP4 only. Copy fades in at lightOnTime, when the bar is fully on.
+ * Both cuts list WebM first with the MP4 as fallback. Mobile (max-width 768px)
+ * uses the portrait files. Copy fades in at lightOnTime, when the bar is fully on.
  * Reduced motion, a stall, or blocked autoplay shows the lit still.
  */
 export const heroMedia = {
@@ -74,6 +74,7 @@ export const heroMedia = {
     height: 1080,
   },
   mobileVideo: {
+    webm: "/assets/product/hero-poweron-mobile.webm",
     src: "/assets/product/hero-poweron-mobile.mp4",
     width: 1080,
     height: 1350,

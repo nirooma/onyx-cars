@@ -157,12 +157,16 @@ export function HeroReveal({
               playsInline
               autoPlay
               preload="auto"
+              poster={cut === "mobile" ? heroMedia.posterMobile.src : heroMedia.poster.src}
               width={cut === "mobile" ? heroMedia.mobileVideo.width : heroMedia.desktopVideo.width}
               height={cut === "mobile" ? heroMedia.mobileVideo.height : heroMedia.desktopVideo.height}
               aria-label={videoLabel}
             >
               {cut === "mobile" ? (
-                <source src={heroMedia.mobileVideo.src} type="video/mp4" />
+                <>
+                  <source src={heroMedia.mobileVideo.webm} type="video/webm" />
+                  <source src={heroMedia.mobileVideo.src} type="video/mp4" />
+                </>
               ) : (
                 <>
                   <source src={heroMedia.desktopVideo.webm} type="video/webm" />

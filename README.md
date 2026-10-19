@@ -28,7 +28,7 @@ Nothing here is deployed, and the site does not load analytics or other trackers
 
 ## What is on the page
 
-One English screen. The hero is the power-on film (`heroMedia` in `src/theme/images.ts`). Desktop plays the 1080p WebM, then the MP4. Viewports at 768px and below play the portrait MP4. It plays once, muted, and holds the last frame. The headline and call to action fade in at `lightOnTime` (1.9s), over 600ms. Reduced motion, a stall, or blocked autoplay shows `final-lit.jpg` (or the portrait still). The call to action is `Join the beta [TBD]`, a mailto with no address. A one-line “Concept renders” footer sits under it. There is no language switcher and the rendered page is left to right.
+One English screen. The hero is the power-on film (`heroMedia` in `src/theme/images.ts`). Desktop plays the 1080p WebM, then the MP4. Viewports at 768px and below play the portrait WebM, then the portrait MP4. The video preloads (`preload="auto"`) behind the dark poster and starts as soon as it can play. It plays once, muted, and holds the last frame. The headline and call to action fade in at `lightOnTime` (1.9s), over 600ms. Reduced motion, a stall, or blocked autoplay shows `final-lit.jpg` (or the portrait still). The call to action is `Join the beta [TBD]`, a mailto with no address. A one-line “Concept renders” footer sits under it. There is no language switcher and the rendered page is left to right.
 
 The steps, problem, privacy, homeowners, monitoring centers, FAQ, form, and long footer components are unused. `DraftHome` in [`src/components/draft-home.tsx`](src/components/draft-home.tsx) still composes them. Hebrew copy remains in [`src/content/he.ts`](src/content/he.ts).
 
@@ -58,7 +58,7 @@ public/assets/product/rotate/scrub.mp4
 
 `frame_000.webp` is frame 0. A count of 120 ends at `frame_119.webp`. Posters are the reduced-motion stills. `scrub.mp4` is the all-intra film that ships with the set; the page draws the WebP frames. Background is `rgb(11, 10, 13)`. After the files are in place, rebuild. The exploded view mounts after the rotation and stays unrendered (`explodedMedia.enabled` is false).
 
-Keep video files under about 2 MB, except `hero-poweron-1080p.mp4`, which is the approved 4.6 MB desktop fallback.
+Keep video files under about 2 MB, except the four `hero-poweron-*` films. Those are the designer-approved high-quality hero set (desktop WebM 4.2 MB, MP4 6.4 MB; mobile WebM 2.2 MB, MP4 3.4 MB) and are capped at 8 MB each.
 
 ## Pilot form
 
