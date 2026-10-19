@@ -906,7 +906,6 @@
   position: absolute;
   border-radius: 50%;
   backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
   background: rgba(11, 10, 13, 0.35);
   -webkit-mask-image: radial-gradient(ellipse at center, #000 68%, transparent 100%);
   mask-image: radial-gradient(ellipse at center, #000 68%, transparent 100%);
@@ -1068,6 +1067,10 @@
     top: calc(100% + 4px);
     left: 0;
     right: auto;
+  }
+
+  .cap-box.ignore .cap-tag:not(.cap-tag-in) {
+    top: calc(100% + 14px);
   }
 }
 

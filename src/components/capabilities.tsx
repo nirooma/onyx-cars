@@ -249,7 +249,7 @@ export function Capabilities() {
               ) : null}
               {panel.kind === "privacy" ? (
                 <div className="cap-overlay" aria-hidden="true">
-                  <div className="cap-face" style={{ left: "18.9%", top: "0.2%", width: "4.6%", height: "7.4%" }} />
+                  <div className="cap-face" style={{ left: "18.4%", top: "0", width: "5.6%", height: "8.6%" }} />
                   <div className="cap-box" style={{ left: "16.8%", top: "0.4%", width: "10%", height: "44%" }}>
                     <span className="cap-tag cap-tag-below cap-mono">Person · face masked</span>
                     <div className="cap-lock">
