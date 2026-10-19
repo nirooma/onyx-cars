@@ -782,6 +782,7 @@
   left: 50%;
   transform: translateX(-50%);
   font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px;
   letter-spacing: 0.02em;
   text-transform: none;
 }
@@ -797,17 +798,18 @@
 }
 
 .cap-box.family {
-  border-color: #7CDAA0;
+  border: 1.5px solid #7CDAA0;
 }
 
 .cap-box.family .cap-tag {
   color: #7CDAA0;
   border-color: rgba(124, 218, 160, 0.5);
   background: rgba(11, 10, 13, 0.95);
+  font-weight: 500;
 }
 
 .cap-box.unknown {
-  border-color: #E5262B;
+  border: 1.5px solid #E5262B;
 }
 
 .cap-box.unknown .cap-tag {
@@ -1015,6 +1017,12 @@
 @media (max-width: 1024px) {
   .cap-box-pet .cap-tag {
     top: calc(100% + 22px);
+  }
+}
+
+@media (max-width: 860px) {
+  .cap-recog {
+    font-size: 10px;
   }
 }
 

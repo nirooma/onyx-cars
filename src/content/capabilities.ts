@@ -31,12 +31,12 @@ export const capabilities = {
       title: "Family or stranger.",
       body: "Recognises household members, unknown people, pets, and objects at the entry.",
       family: {
-        image: "/assets/product/capabilities/cam_family@2x.jpg",
+        image: "/assets/product/capabilities/cam_family_v41@2x.jpg",
         alt: "Recognised household member Dana",
         label: "Family · Dana",
       },
       unknown: {
-        image: "/assets/product/capabilities/cam_unknown@2x.jpg",
+        image: "/assets/product/capabilities/cam_unknown_v41@2x.jpg",
         alt: "Unknown person at the entry",
         label: "Unknown person",
       },
