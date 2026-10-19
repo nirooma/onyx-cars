@@ -2,113 +2,27 @@
 
 import Image from "next/image";
 import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
-import { capabilities, capabilityEdges, capabilityNodeStyle } from "@/content/capabilities";
+import { capabilities } from "@/content/capabilities";
 
-const EDGES = capabilityEdges();
+const SIZES = "(max-width: 860px) 100vw, 64vw";
 
-function clamp(value: number) {
-  return Math.min(95, Math.max(5, value));
-}
+const THREAD_FOR_PILLAR: Record<string, number> = {
+  ai: 1,
+  sensors: 1,
+  recog: 2,
+  alerts: 3,
+};
 
-/** Night view leads on load. The one-shot hint returns here. */
-const SLIDER_REST = 70;
-
-function NightSlider({ revealed, reduced }: { revealed: boolean; reduced: boolean }) {
-  const sliderRef = useRef<HTMLDivElement>(null);
-  const dragging = useRef(false);
-  const userMoved = useRef(false);
-  const [pct, setPct] = useState(SLIDER_REST);
-  const panel = capabilities.panels[1];
-
-  useEffect(() => {
-    if (!revealed || reduced || userMoved.current) return;
-    let frame = 0;
-    const start = performance.now();
-    const tick = (now: number) => {
-      if (userMoved.current) return;
-      const t = Math.min(1, (now - start) / 1400);
-      setPct(SLIDER_REST + Math.sin(t * Math.PI) * 22);
-      if (t < 1) frame = requestAnimationFrame(tick);
-    };
-    frame = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(frame);
-  }, [revealed, reduced]);
-
-  function setFromClient(clientX: number) {
-    const box = sliderRef.current?.getBoundingClientRect();
-    if (!box || box.width === 0) return;
-    setPct(clamp(((clientX - box.left) / box.width) * 100));
-  }
-
-  return (
-    <div
-      ref={sliderRef}
-      className="cap-slider"
-      style={{ ["--cap-pct" as string]: `${pct}%` }}
-      role="slider"
-      tabIndex={0}
-      aria-valuemin={5}
-      aria-valuemax={95}
-      aria-valuenow={Math.round(pct)}
-      aria-orientation="horizontal"
-      aria-label="Compare the night view with the light bar and the same view in the dark"
-      onPointerDown={(event) => {
-        userMoved.current = true;
-        dragging.current = true;
-        event.currentTarget.setPointerCapture(event.pointerId);
-        setFromClient(event.clientX);
-      }}
-      onPointerMove={(event) => {
-        if (dragging.current) setFromClient(event.clientX);
-      }}
-      onPointerUp={() => {
-        dragging.current = false;
-      }}
-      onPointerCancel={() => {
-        dragging.current = false;
-      }}
-      onKeyDown={(event) => {
-        if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
-          event.preventDefault();
-          userMoved.current = true;
-          setPct((current) => clamp(current + (event.key === "ArrowRight" ? 5 : -5)));
-        }
-        if (event.key === "Home") {
-          event.preventDefault();
-          userMoved.current = true;
-          setPct(5);
-        }
-        if (event.key === "End") {
-          event.preventDefault();
-          userMoved.current = true;
-          setPct(95);
-        }
-      }}
-    >
-      <Image
-        className="cap-photo"
-        src={panel.dark}
-        alt={panel.darkAlt}
-        fill
-        sizes="(max-width: 900px) 100vw, 60vw"
-      />
-      <div className="cap-slider-lit">
-        <Image className="cap-photo" src={panel.image} alt="" fill sizes="(max-width: 900px) 100vw, 60vw" />
-      </div>
-      <div className="cap-slider-handle" aria-hidden="true" />
-      <span className="cap-cap cap-cap-l cap-mono">Night view</span>
-      <span className="cap-cap cap-cap-r cap-mono">Dark</span>
-    </div>
-  );
+function FramePhoto({ src, alt }: { src: string; alt: string }) {
+  return <Image className="cap-photo" src={src} alt={alt} fill sizes={SIZES} />;
 }
 
 export function Capabilities() {
   const sectionRef = useRef<HTMLElement>(null);
   const titleId = useId();
-  const [reduced, setReduced] = useState(false);
   const [reveal, setReveal] = useState(false);
-  const [live, setLive] = useState("ai");
-  const [railOn, setRailOn] = useState(false);
+  const [reduced, setReduced] = useState(false);
+  const [lit, setLit] = useState<number[]>([0]);
   const [shown, setShown] = useState<Record<string, boolean>>({});
 
   useLayoutEffect(() => {
@@ -125,32 +39,39 @@ export function Capabilities() {
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
-    const intro = section.querySelector<HTMLElement>("[data-cap-intro]");
-    const panels = [...section.querySelectorAll<HTMLElement>("[data-cap-panel]")];
+    const pillars = [...section.querySelectorAll<HTMLElement>("[data-cap-pillar]")];
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          const node = entry.target.getAttribute("data-node");
-          if (!entry.isIntersecting || !node) return;
-          setShown((current) => (current[node] ? current : { ...current, [node]: true }));
-          setLive(node);
+          if (!entry.isIntersecting) return;
+          const id = entry.target.getAttribute("data-pillar");
+          if (!id) return;
+          setShown((current) => (current[id] ? current : { ...current, [id]: true }));
+          const step = THREAD_FOR_PILLAR[id] ?? 0;
+          setLit(Array.from({ length: step + 1 }, (_, index) => index));
         });
       },
-      { threshold: 0.4, rootMargin: "0px 0px -10% 0px" },
+      { threshold: 0.4 },
     );
-    panels.forEach((panel) => observer.observe(panel));
-    const introObserver = new IntersectionObserver(
-      ([entry]) => {
-        if (entry) setRailOn(!entry.isIntersecting);
-      },
-      { threshold: 0.15 },
-    );
-    if (intro) introObserver.observe(intro);
-    return () => {
-      observer.disconnect();
-      introObserver.disconnect();
-    };
+    pillars.forEach((pillar) => observer.observe(pillar));
+    return () => observer.disconnect();
   }, []);
+
+  useEffect(() => {
+    if (reduced) return;
+    let tick = 0;
+    const timer = window.setInterval(() => {
+      if (window.scrollY > 200 && Object.keys(shown).length > 0) return;
+      tick = (tick + 1) % 4;
+      setLit([tick]);
+    }, 1800);
+    return () => window.clearInterval(timer);
+  }, [reduced, shown]);
+
+  const ai = capabilities.pillars[0];
+  const sensors = capabilities.pillars[1];
+  const recog = capabilities.pillars[2];
+  const alerts = capabilities.pillars[3];
 
   return (
     <section
@@ -160,111 +81,167 @@ export function Capabilities() {
       aria-labelledby={titleId}
       data-reveal={reveal ? "" : undefined}
     >
-      <div className="cap-intro" data-cap-intro="">
-        <div>
+      <div className="cap-wrap">
+        <header className="cap-intro">
           <p className="cap-eyebrow cap-mono">{capabilities.eyebrow}</p>
           <h2 className="cap-headline" id={titleId}>
-            One mind.
+            {capabilities.headline[0]}
             <br />
-            Every sense.
+            {capabilities.headline[1]}
           </h2>
           <p className="cap-lede">{capabilities.lede}</p>
-        </div>
-        <div className="cap-net" aria-hidden="true">
-          <svg viewBox="0 0 520 400">
-            <g fill="none" stroke="rgba(242,246,255,0.18)" strokeWidth="0.9">
-              {EDGES.map((edge) => (
-                <path
-                  key={`${edge.from}-${edge.to}`}
-                  className={edge.from === live || edge.to === live ? "cap-edge is-hot" : "cap-edge"}
-                  d={edge.d}
-                />
-              ))}
-            </g>
-          </svg>
-          {capabilities.nodes.map((node) => (
-            <div
-              key={node.id}
-              className={`cap-node${node.core ? " core" : ""}${live === node.id ? " is-live" : ""}`}
-              style={capabilityNodeStyle(node.x, node.y)}
-            >
-              <div className="cap-dot" />
-              <div className="cap-node-label cap-mono">{node.name}</div>
+        </header>
+
+        <div className="cap-thread" aria-label="Night story">
+          {capabilities.thread.map((label, index) => (
+            <div key={label} className="cap-thread-pair">
+              {index > 0 ? <span className="cap-thread-line" aria-hidden="true" /> : null}
+              <div className={`cap-thread-step${lit.includes(index) ? " is-on" : ""}`}>
+                <span className="cap-dot" />
+                <span className="cap-mono">{label}</span>
+              </div>
             </div>
           ))}
         </div>
-      </div>
 
-      <div className={`cap-rail${railOn ? " on" : ""}`} aria-hidden="true">
-        <div className="cap-pill">
-          {capabilities.nodes.map((node) => (
-            <div key={node.id} className="cap-pill-item">
-              <span className={`cap-pill-dot${node.core ? " core" : ""}${live === node.id ? " on" : ""}`} />
-              <span className="cap-pill-label cap-mono">{node.name}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {capabilities.panels.map((panel) => (
         <article
-          key={panel.id}
-          className={`cap-panel${"reverse" in panel && panel.reverse ? " reverse" : ""}${shown[panel.id] ? " is-in" : ""}`}
-          data-cap-panel=""
-          data-node={panel.id}
-          id={`panel-${panel.id}`}
+          className={`cap-pillar${shown.ai ? " is-in" : ""}`}
+          data-cap-pillar=""
+          data-pillar="ai"
+          id="pillar-ai"
         >
           <div className="cap-copy">
-            <p className="cap-eye cap-mono">{panel.eyebrow}</p>
-            <h3 className="cap-head">{panel.headline}</h3>
-            <p className="cap-line">{panel.line}</p>
-            <div className="cap-chips">
-              {panel.chips.map((chip) => (
-                <span key={chip.label} className={`cap-chip cap-mono${chip.tone === "dim" ? " dim" : ""}${chip.tone === "asp" ? " asp" : ""}`}>
-                  {chip.label}
-                </span>
-              ))}
-            </div>
+            <p className="cap-num cap-mono">{ai.eyebrow}</p>
+            <h3 className="cap-title">{ai.title}</h3>
+            <p className="cap-body">{ai.body}</p>
           </div>
           <div className="cap-visual">
-            <div className={`cap-frame${panel.kind === "ai" || panel.kind === "privacy" ? " warm" : ""}`}>
-              {panel.kind === "slider" ? (
-                <NightSlider revealed={Boolean(shown[panel.id])} reduced={reduced} />
-              ) : (
-                <Image className="cap-photo" src={panel.image} alt={panel.alt} fill sizes="(max-width: 900px) 100vw, 60vw" />
-              )}
-              {panel.kind === "ai" ? (
-                <div className="cap-overlay" aria-hidden="true">
-                  <span className="cap-hud cap-mono">Live · On-device</span>
-                  <div className="cap-box" style={{ left: "34.3%", top: "2.6%", width: "9.2%", height: "42.6%" }}>
-                    <span className="cap-tag cap-tag-below cap-mono">Person</span>
-                  </div>
-                  <div className="cap-box ignore" style={{ left: "16.6%", top: "37%", width: "8.2%", height: "16.8%" }}>
-                    <span className="cap-tag cap-mono">Pet · ignored</span>
-                  </div>
-                  <div className="cap-box ignore" style={{ left: "72%", top: "1%", width: "27%", height: "55%" }}>
-                    <span className="cap-tag cap-tag-in cap-mono">Motion · ignored</span>
-                  </div>
+            <div className="cap-frame">
+              <FramePhoto src={ai.image} alt={ai.alt} />
+              <div className="cap-overlay" aria-hidden="true">
+                <span className="cap-hud cap-mono">Live · On-device</span>
+                <div className="cap-box" style={{ left: "46%", top: "16%", width: "15%", height: "50%", animationDelay: "0.15s" }}>
+                  <span className="cap-tag cap-mono">Person</span>
                 </div>
-              ) : null}
-              {panel.kind === "privacy" ? (
-                <div className="cap-overlay" aria-hidden="true">
-                  <div className="cap-face" style={{ left: "18.4%", top: "0", width: "5.6%", height: "8.6%" }} />
-                  <div className="cap-box" style={{ left: "16.8%", top: "0.4%", width: "10%", height: "44%" }}>
-                    <span className="cap-tag cap-tag-below cap-mono">Person · face masked</span>
-                    <div className="cap-lock">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="#F2F6FF" strokeWidth="1.8" aria-hidden="true">
-                        <rect x="5" y="11" width="14" height="10" rx="2" />
-                        <path d="M8 11V8a4 4 0 0 1 8 0v3" />
-                      </svg>
-                    </div>
-                  </div>
+                <div className="cap-box ignore" style={{ left: "12%", top: "50%", width: "15%", height: "20%", animationDelay: "0.35s" }}>
+                  <span className="cap-tag cap-mono">Pet · ignored</span>
                 </div>
-              ) : null}
+                <div className="cap-box ignore" style={{ left: "70%", top: "10%", width: "22%", height: "58%", animationDelay: "0.5s" }}>
+                  <span className="cap-tag cap-tag-end cap-mono">Curtain · ignored</span>
+                </div>
+              </div>
             </div>
           </div>
         </article>
-      ))}
+
+        <article
+          className={`cap-pillar reverse${shown.sensors ? " is-in" : ""}`}
+          data-cap-pillar=""
+          data-pillar="sensors"
+          id="pillar-sensors"
+        >
+          <div className="cap-copy">
+            <p className="cap-num cap-mono">{sensors.eyebrow}</p>
+            <h3 className="cap-title">{sensors.title}</h3>
+            <p className="cap-body">{sensors.body}</p>
+          </div>
+          <div className="cap-visual">
+            <div className="cap-frame">
+              <FramePhoto src={sensors.image} alt={sensors.alt} />
+              <div className="cap-sensor-tags cap-mono">
+                {sensors.chips.map((chip) => (
+                  <span key={chip}>{chip}</span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article
+          className={`cap-pillar${shown.recog ? " is-in" : ""}`}
+          data-cap-pillar=""
+          data-pillar="recog"
+          id="pillar-recog"
+        >
+          <div className="cap-copy">
+            <p className="cap-num cap-mono">{recog.eyebrow}</p>
+            <h3 className="cap-title">{recog.title}</h3>
+            <p className="cap-body">{recog.body}</p>
+          </div>
+          <div className="cap-visual">
+            <div className="cap-frame cap-split">
+              <div className="cap-half">
+                <FramePhoto src={recog.family.image} alt={recog.family.alt} />
+                <div className="cap-overlay" aria-hidden="true">
+                  <div className="cap-box family" style={{ left: "8%", top: "6%", width: "34%", height: "40%", animationDelay: "0.2s" }}>
+                    <span className="cap-tag cap-mono">{recog.family.label}</span>
+                  </div>
+                </div>
+              </div>
+              <div className="cap-half">
+                <FramePhoto src={recog.unknown.image} alt={recog.unknown.alt} />
+                <div className="cap-overlay" aria-hidden="true">
+                  <div className="cap-box unknown" style={{ left: "7%", top: "5%", width: "36%", height: "42%", animationDelay: "0.35s" }}>
+                    <span className="cap-tag cap-mono">{recog.unknown.label}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article
+          className={`cap-pillar reverse${shown.alerts ? " is-in" : ""}`}
+          data-cap-pillar=""
+          data-pillar="alerts"
+          id="pillar-alerts"
+        >
+          <div className="cap-copy">
+            <p className="cap-num cap-mono">{alerts.eyebrow}</p>
+            <h3 className="cap-title">{alerts.title}</h3>
+            <p className="cap-body">{alerts.body}</p>
+          </div>
+          <div className="cap-visual">
+            <div className="cap-frame cap-phone-frame">
+              <div className="cap-phone-stage">
+                <div className="cap-phone">
+                  <div className="cap-notch" />
+                  <div className="cap-notif">
+                    <div className="cap-notif-top">
+                      <div className="cap-notif-icon" aria-hidden="true">
+                        <span>S</span>
+                      </div>
+                      <span className="cap-notif-app cap-mono">Stillward</span>
+                      <span className="cap-notif-time">now</span>
+                    </div>
+                    <p className="cap-notif-title">{alerts.notifTitle}</p>
+                    <p className="cap-notif-body">{alerts.notifBody}</p>
+                    <div className="cap-notif-snap">
+                      <Image className="cap-photo" src={alerts.image} alt={alerts.alt} fill sizes="220px" />
+                    </div>
+                  </div>
+                  <div className="cap-modes">
+                    <p className="cap-mode cap-mono">
+                      <strong>Away</strong>
+                      {" — "}
+                      {alerts.away.split("87 dB(A)")[0]}
+                      <span className="cap-red">87 dB(A)</span>
+                      {alerts.away.split("87 dB(A)")[1]}
+                    </p>
+                    <p className="cap-mode cap-mono">
+                      <strong>Home-night</strong>
+                      {" — "}
+                      {alerts.home}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <p className="cap-foot cap-mono">{capabilities.foot}</p>
+      </div>
     </section>
   );
 }

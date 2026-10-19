@@ -4,7 +4,7 @@
 
 Marketing site for an early-stage Israeli robotics prototype: a home night-guard robot. The brand is Stillward. The product is Stillward One. The dock is the Post.
 
-It is a standalone night guard, sold direct to homeowners of villas, cottages, and ground-floor apartments. It learns a normal night in the house. When you are away and it detects a person, it answers with light, a siren, and a photo on your phone. It does not use face recognition. This site recruits a beta. It is not a store.
+It is a standalone night guard, sold direct to homeowners of villas, cottages, and ground-floor apartments. It learns a normal night in the house. When you are away and it detects a person, it answers with light, a siren, and a photo on your phone. At the entry it recognises household members and unknown people. This site recruits a beta. It is not a store.
 
 The visuals are concept renders. The page says so.
 
@@ -30,7 +30,7 @@ Nothing here is deployed, and the site does not load analytics or other trackers
 
 One English page. The hero is the power-on film (`heroMedia` in `src/theme/images.ts`). Desktop plays the 1080p WebM, then the MP4. Viewports at 768px and below play the portrait WebM, then the portrait MP4. The video preloads (`preload="auto"`) behind the dark poster and starts as soon as it can play. It plays once, muted, and holds the last frame. The headline and call to action fade in at `lightOnTime` (1.9s), over 600ms. Reduced motion, a stall, or blocked autoplay shows `final-lit.jpg` (or the portrait still). The call to action is `Join the beta [TBD]`, a mailto with no address. A one-line “Concept renders” footer sits on the hero. There is no language switcher and the rendered page is left to right.
 
-Directly under the hero is the capabilities section (`Capabilities` in `src/components/capabilities.tsx`, copy in `src/content/capabilities.ts`). Five panels, a small network diagram, and a night-view slider. Proof chips are the approved strings in that file. Do not add identify or recognize-people claims, and do not add specs that are not already written there. Stills live in `public/assets/product/capabilities/`.
+Directly under the hero is capabilities v4 (`Capabilities` in `src/components/capabilities.tsx`, copy in `src/content/capabilities.ts`). Four pillars — AI, smart sensors, recognition, and smart alerts — plus the Sleep → Detect → Alert → Rest thread and the footer line about four-wheel drive. Recognition is the approved family-versus-unknown treatment. Do not put the blur-privacy panel, “Watches. Never identifies.”, or a motors pillar back. Do not claim a siren louder than 87 dB(A). Stills live in `public/assets/product/capabilities/` (1x and `@2x`).
 
 The steps, problem, privacy, homeowners, monitoring centers, FAQ, form, and long footer components are unused. `DraftHome` in [`src/components/draft-home.tsx`](src/components/draft-home.tsx) still composes them. Hebrew copy remains in [`src/content/he.ts`](src/content/he.ts).
 
@@ -67,4 +67,4 @@ The hook is `deliverWaitlist` in [`src/lib/waitlist.ts`](src/lib/waitlist.ts). T
 
 The copy does not invent prices, certifications, patents, statistics, customers, testimonials, partner logos, or launch dates. Those spots are marked `[TBD]`.
 
-Also still open: a public contact address, retention and access rules for evidence, how a monitoring center would connect, and commercial terms. Sound is described as capped at 87 dB, not as a loud siren. The robot is described as an indoor entry-floor device.
+Also still open: a public contact address, retention and access rules for evidence, how a monitoring center would connect, and commercial terms. The siren in the capabilities copy is 87 dB(A), with a 6 minute auto-stop. The robot is described as an indoor entry-floor device.

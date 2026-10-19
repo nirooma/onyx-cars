@@ -539,7 +539,7 @@
   }
 }
 
-/* Capabilities. Sits after the hero. The hero rules above stay as signed off. */
+/* Capabilities v4. Sits after the hero. The hero rules above stay as signed off. */
 
 .cap-section {
   position: relative;
@@ -547,303 +547,178 @@
   color: #EDEDEB;
 }
 
+.cap-wrap {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
 .cap-mono {
   font-family: var(--font-mono), ui-monospace, monospace;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.07em;
   text-transform: uppercase;
 }
 
 .cap-intro {
   position: relative;
-  display: grid;
-  grid-template-columns: 1fr 1.15fr;
-  gap: 40px;
-  align-items: center;
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 72px 48px 40px;
+  padding: 88px 0 0;
+  text-align: center;
 }
 
 .cap-intro::before {
   content: "";
   position: absolute;
-  inset: 0;
-  z-index: 0;
-  background: radial-gradient(ellipse 50% 45% at 70% 50%, rgba(242, 246, 255, 0.05), transparent 70%);
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+  width: 70%;
+  height: 280px;
+  background: radial-gradient(ellipse, rgba(242, 246, 255, 0.05), transparent 70%);
   pointer-events: none;
-}
-
-.cap-intro > * {
-  position: relative;
-  z-index: 1;
 }
 
 .cap-eyebrow {
   font-size: 11px;
   color: #A1A1A6;
-  margin-bottom: 18px;
+  margin-bottom: 20px;
 }
 
 .cap-headline {
-  font-size: clamp(40px, 5vw, 64px);
+  font-size: clamp(40px, 5.5vw, 68px);
   font-weight: 500;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.038em;
   line-height: 1.05;
   margin-bottom: 16px;
   color: #EDEDEB;
 }
 
 .cap-lede {
-  font-size: 16px;
+  font-size: 17px;
   color: #A1A1A6;
-  max-width: 28ch;
   line-height: 1.5;
+  max-width: 36ch;
+  margin: 0 auto;
 }
 
-.cap-net {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 1.2 / 1;
-  max-height: 420px;
+.cap-thread {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 40px auto 56px;
 }
 
-.cap-net svg {
-  width: 100%;
-  height: 100%;
-  overflow: visible;
+.cap-thread-pair {
+  display: flex;
+  align-items: center;
 }
 
-.cap-edge.is-hot {
-  stroke: rgba(242, 246, 255, 0.55);
-  stroke-dasharray: 12 88;
-  animation: cap-edge 2.6s linear infinite;
-}
-
-@keyframes cap-edge {
-  to {
-    stroke-dashoffset: -100;
-  }
-}
-
-.cap-node {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  pointer-events: none;
+.cap-thread-step {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  color: #6E6E73;
+  font-size: 11px;
 }
 
 .cap-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #F2F6FF;
-  margin: 0 auto 6px;
-  box-shadow: 0 0 10px rgba(242, 246, 255, 0.4);
-  transition: box-shadow 0.3s, transform 0.3s;
-}
-
-.cap-node.core .cap-dot {
-  width: 14px;
-  height: 14px;
-  box-shadow: 0 0 22px 4px rgba(242, 246, 255, 0.45);
-  animation: cap-core 2.8s ease-in-out infinite;
-}
-
-@keyframes cap-core {
-  0%,
-  100% {
-    box-shadow: 0 0 22px 4px rgba(242, 246, 255, 0.45);
-  }
-  50% {
-    box-shadow: 0 0 28px 7px rgba(242, 246, 255, 0.7);
-  }
-}
-
-.cap-node-label {
-  font-size: 10px;
-  color: #A1A1A6;
-  white-space: nowrap;
-}
-
-.cap-node.core .cap-node-label {
-  color: #EDEDEB;
-  font-size: 11px;
-}
-
-.cap-node.is-live .cap-dot {
-  box-shadow: 0 0 20px 5px rgba(242, 246, 255, 0.7);
-  transform: scale(1.25);
-}
-
-.cap-node.is-live .cap-node-label {
-  color: #EDEDEB;
-}
-
-.cap-rail {
-  position: sticky;
-  top: 24px;
-  z-index: 20;
-  display: none;
-  justify-content: center;
-  padding: 10px 0;
-  pointer-events: none;
-}
-
-.cap-rail.on {
-  display: flex;
-}
-
-.cap-pill {
-  display: flex;
-  gap: 18px;
-  align-items: center;
-  padding: 10px 20px;
-  background: rgba(11, 10, 13, 0.82);
-  border: 1px solid rgba(242, 246, 255, 0.1);
-  backdrop-filter: blur(12px);
-  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
-  pointer-events: auto;
-}
-
-.cap-pill-item {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.cap-pill-dot {
-  width: 7px;
-  height: 7px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   background: rgba(242, 246, 255, 0.35);
-  transition: background 0.3s, box-shadow 0.3s, transform 0.3s;
 }
 
-.cap-pill-dot.core {
-  width: 9px;
-  height: 9px;
+.cap-thread-step.is-on {
+  color: #EDEDEB;
 }
 
-.cap-pill-dot.on {
+.cap-thread-step.is-on .cap-dot {
   background: #F2F6FF;
-  box-shadow: 0 0 12px 2px rgba(242, 246, 255, 0.55);
-  transform: scale(1.3);
+  box-shadow: 0 0 10px 2px rgba(242, 246, 255, 0.45);
+  animation: cap-pulse 1.6s ease-in-out infinite;
 }
 
-.cap-pill-label {
-  font-size: 9px;
-  color: rgba(161, 161, 166, 0.8);
-  margin-left: 4px;
+.cap-thread-line {
+  width: 36px;
+  height: 1px;
+  background: rgba(242, 246, 255, 0.15);
 }
 
-.cap-panel {
-  position: relative;
+@keyframes cap-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 6px 1px rgba(242, 246, 255, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 14px 3px rgba(242, 246, 255, 0.55);
+  }
+}
+
+.cap-pillar {
   display: grid;
-  grid-template-columns: minmax(280px, 38%) 1fr;
-  gap: 40px 48px;
+  grid-template-columns: minmax(260px, 36%) 1fr;
+  gap: 36px 48px;
   align-items: center;
-  max-width: 1320px;
-  margin: 0 auto;
-  padding: 56px 48px;
+  padding: 48px 0;
 }
 
-.cap-section[data-reveal] .cap-panel {
+.cap-section[data-reveal] .cap-pillar {
   transition: opacity 0.55s ease, transform 0.55s ease;
 }
 
-.cap-section[data-reveal] .cap-panel:not(.is-in) {
+.cap-section[data-reveal] .cap-pillar:not(.is-in) {
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(18px);
 }
 
-.cap-panel.reverse {
-  grid-template-columns: 1fr minmax(280px, 38%);
+.cap-pillar.reverse {
+  grid-template-columns: 1fr minmax(260px, 36%);
 }
 
-.cap-panel.reverse .cap-visual {
+.cap-pillar.reverse .cap-visual {
   order: 1;
 }
 
-.cap-panel.reverse .cap-copy {
+.cap-pillar.reverse .cap-copy {
   order: 2;
 }
 
-.cap-copy {
-  padding: 8px 0;
-  max-width: 420px;
-}
-
-.cap-eye {
+.cap-num {
   font-size: 11px;
-  color: rgba(161, 161, 166, 0.8);
-  margin-bottom: 14px;
+  color: #6E6E73;
+  margin-bottom: 12px;
 }
 
-.cap-head {
-  font-size: clamp(36px, 4.6vw, 60px);
+.cap-title {
+  font-size: clamp(32px, 4vw, 48px);
   font-weight: 500;
-  letter-spacing: -0.035em;
-  line-height: 1.05;
-  margin-bottom: 14px;
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+  margin-bottom: 12px;
   color: #EDEDEB;
 }
 
-.cap-line {
+.cap-body {
   font-size: 15px;
   line-height: 1.5;
   color: #A1A1A6;
-  margin-bottom: 22px;
-  max-width: 34ch;
-}
-
-.cap-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.cap-chip {
-  font-size: 11px;
-  color: #EDEDEB;
-  padding: 8px 12px;
-  background: #141416;
-  border: 1px solid rgba(242, 246, 255, 0.1);
-  border-radius: 4px;
-}
-
-.cap-chip.dim {
-  color: #A1A1A6;
-}
-
-.cap-chip.asp {
-  border-color: rgba(242, 246, 255, 0.06);
-  color: rgba(161, 161, 166, 0.78);
-}
-
-.cap-visual {
-  position: relative;
-  width: 100%;
+  max-width: 32ch;
 }
 
 .cap-frame {
   position: relative;
   width: 100%;
-  container-type: inline-size;
-  /* Source stills are 1280×720. Matching the ratio keeps overlay % locked to the subjects. */
   aspect-ratio: 16 / 9;
-  background: #141416;
-  overflow: hidden;
   border-radius: 5px;
+  overflow: hidden;
+  background: #141416;
   border: 1px solid rgba(242, 246, 255, 0.06);
 }
 
 .cap-photo {
   object-fit: contain;
   object-position: center;
-}
-
-.cap-frame.warm .cap-photo {
-  filter: brightness(1.06) saturate(0.92) sepia(0.08);
 }
 
 .cap-overlay {
@@ -855,23 +730,48 @@
 .cap-box {
   position: absolute;
   border: 1.5px solid #F2F6FF;
-  box-shadow: 0 0 0 1px rgba(11, 10, 13, 0.3);
+}
+
+.cap-section[data-reveal] .cap-box {
+  opacity: 0;
+  transform: scale(0.97);
+}
+
+.cap-section[data-reveal] .cap-pillar.is-in .cap-box {
+  animation: cap-fade-box 0.8s ease both;
+}
+
+@keyframes cap-fade-box {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .cap-tag {
   position: absolute;
   left: 0;
-  top: -16px;
+  top: 0;
   font-size: 10px;
   padding: 3px 7px;
-  background: rgba(11, 10, 13, 0.85);
-  color: #F2F6FF;
-  border: 1px solid rgba(242, 246, 255, 0.25);
   white-space: nowrap;
+  background: rgba(11, 10, 13, 0.92);
+  color: #F2F6FF;
+  border: 1px solid rgba(242, 246, 255, 0.3);
+  z-index: 2;
+}
+
+.cap-tag-end {
+  left: auto;
+  right: 0;
 }
 
 .cap-box.ignore {
-  border-color: rgba(161, 161, 166, 0.55);
+  border-color: rgba(161, 161, 166, 0.5);
   border-style: dashed;
 }
 
@@ -880,197 +780,265 @@
   border-color: rgba(161, 161, 166, 0.3);
 }
 
-/* Labels near the frame edge sit inside the box and grow left, so they are not clipped. */
-.cap-tag.cap-tag-in {
-  left: auto;
-  right: 6px;
-  top: 8px;
+.cap-box.family {
+  border-color: #7CDAA0;
 }
 
-/* Boxes that start at the top of the frame keep their label underneath. */
-.cap-tag.cap-tag-below {
-  top: calc(100% + 6px);
-  left: 0;
-  right: auto;
+.cap-box.family .cap-tag {
+  color: #7CDAA0;
+  border-color: rgba(124, 218, 160, 0.5);
+  background: rgba(11, 10, 13, 0.95);
+}
+
+.cap-box.unknown {
+  border-color: #E5262B;
+}
+
+.cap-box.unknown .cap-tag {
+  color: #FFFFFF;
+  background: #E5262B;
+  border-color: #E5262B;
+  font-weight: 500;
 }
 
 .cap-hud {
   position: absolute;
-  top: 14px;
-  left: 14px;
+  top: 12px;
+  left: 12px;
   font-size: 10px;
   color: rgba(242, 246, 255, 0.55);
 }
 
-.cap-face {
+.cap-sensor-tags {
   position: absolute;
-  border-radius: 50%;
-  backdrop-filter: blur(12px);
-  background: rgba(11, 10, 13, 0.35);
-  -webkit-mask-image: radial-gradient(ellipse at center, #000 68%, transparent 100%);
-  mask-image: radial-gradient(ellipse at center, #000 68%, transparent 100%);
+  left: 12px;
+  bottom: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  max-width: 90%;
 }
 
-.cap-lock {
-  position: absolute;
-  top: 0;
-  right: 0;
-  transform: translate(72%, 0);
-  width: 44px;
-  height: 44px;
+.cap-sensor-tags span {
+  font-size: 10px;
+  padding: 5px 8px;
+  background: rgba(11, 10, 13, 0.75);
+  color: #EDEDEB;
+  border: 1px solid rgba(242, 246, 255, 0.12);
+  border-radius: 3px;
+}
+
+.cap-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3px;
+  background: #0B0A0D;
+}
+
+.cap-half {
+  position: relative;
+  overflow: hidden;
+  min-height: 100%;
+}
+
+.cap-phone-frame {
+  aspect-ratio: 16 / 10;
+  min-height: 460px;
+}
+
+.cap-phone-stage {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(11, 10, 13, 0.75);
-  border: 1px solid rgba(242, 246, 255, 0.2);
-  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+  height: 100%;
+  min-height: inherit;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 60%, rgba(242, 246, 255, 0.04), transparent 70%),
+    #0B0A0D;
 }
 
-.cap-lock svg {
-  width: 20px;
-  height: 20px;
+.cap-phone {
+  width: 220px;
+  height: 420px;
+  background: #1a1a1d;
+  border-radius: 28px;
+  border: 2px solid rgba(242, 246, 255, 0.18);
+  padding: 14px 12px;
+  position: relative;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
 }
 
-.cap-slider {
-  position: absolute;
-  inset: 0;
-  user-select: none;
-  touch-action: pan-y;
-  cursor: ew-resize;
+.cap-notch {
+  width: 72px;
+  height: 8px;
+  border-radius: 8px;
+  background: #0B0A0D;
+  margin: 0 auto 16px;
 }
 
-.cap-slider img {
-  pointer-events: none;
-  -webkit-user-drag: none;
+.cap-notif {
+  background: rgba(40, 40, 44, 0.95);
+  border-radius: 14px;
+  padding: 12px;
+  border: 1px solid rgba(242, 246, 255, 0.08);
+  animation: cap-notif 2.4s ease-in-out infinite;
 }
 
-.cap-slider-lit {
-  position: absolute;
-  inset: 0;
-  clip-path: inset(0 calc(100% - var(--cap-pct, 70%)) 0 0);
+@keyframes cap-notif {
+  0%,
+  100% {
+    transform: translateY(6px);
+    opacity: 0.85;
+  }
+  20%,
+  70% {
+    transform: none;
+    opacity: 1;
+  }
 }
 
-.cap-slider-handle {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: var(--cap-pct, 70%);
-  width: 2px;
+.cap-notif-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.cap-notif-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
   background: #F2F6FF;
-  transform: translateX(-50%);
-  box-shadow: 0 0 12px rgba(242, 246, 255, 0.4);
-  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
 }
 
-.cap-slider-handle::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  background: rgba(11, 10, 13, 0.85);
-  border: 1.5px solid #F2F6FF;
-  box-shadow: 0 0 16px rgba(242, 246, 255, 0.3);
+.cap-notif-icon span {
+  font-size: 9px;
+  color: #0B0A0D;
+  font-weight: 600;
 }
 
-.cap-cap {
-  position: absolute;
-  bottom: 14px;
-  font-size: 10px;
+.cap-notif-app {
+  font-size: 11px;
   color: #A1A1A6;
-  padding: 4px 8px;
-  background: rgba(11, 10, 13, 0.7);
 }
 
-.cap-cap-l {
-  left: 14px;
+.cap-notif-time {
+  margin-left: auto;
+  font-size: 10px;
+  color: #6E6E73;
 }
 
-.cap-cap-r {
-  right: 14px;
-  color: #F2F6FF;
+.cap-notif-title {
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 4px;
+  color: #EDEDEB;
 }
 
-@media (max-width: 900px) {
+.cap-notif-body {
+  font-size: 11px;
+  color: #A1A1A6;
+  line-height: 1.35;
+  margin-bottom: 8px;
+}
+
+.cap-notif-snap {
+  position: relative;
+  width: 100%;
+  height: 88px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #0B0A0D;
+}
+
+.cap-notif-snap .cap-photo {
+  object-fit: cover;
+  filter: brightness(1.05);
+}
+
+.cap-modes {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cap-mode {
+  font-size: 10px;
+  padding: 7px 10px;
+  border-radius: 4px;
+  background: rgba(20, 20, 22, 0.9);
+  color: #A1A1A6;
+  border: 1px solid rgba(242, 246, 255, 0.08);
+}
+
+.cap-mode strong {
+  color: #EDEDEB;
+  font-weight: 500;
+}
+
+.cap-red {
+  color: #E5262B;
+}
+
+.cap-foot {
+  text-align: center;
+  padding: 24px 0 72px;
+  font-size: 12px;
+  color: #6E6E73;
+}
+
+@media (max-width: 860px) {
+  .cap-wrap {
+    padding: 0 20px;
+  }
+
   .cap-intro {
+    padding: 64px 0 0;
+    text-align: left;
+  }
+
+  .cap-lede {
+    margin: 0;
+  }
+
+  .cap-thread {
+    justify-content: flex-start;
+    margin: 28px 0 36px;
+  }
+
+  .cap-pillar,
+  .cap-pillar.reverse {
     grid-template-columns: 1fr;
-    padding: 56px 20px 28px;
+    gap: 18px;
+    padding: 32px 0;
   }
 
-  .cap-net {
-    max-height: 280px;
-  }
-
-  .cap-panel,
-  .cap-panel.reverse {
-    grid-template-columns: 1fr;
-    padding: 36px 20px;
-    gap: 20px;
-  }
-
-  .cap-panel .cap-visual,
-  .cap-panel.reverse .cap-visual {
+  .cap-pillar .cap-visual,
+  .cap-pillar.reverse .cap-visual {
     order: 1;
   }
 
-  .cap-panel .cap-copy,
-  .cap-panel.reverse .cap-copy {
+  .cap-pillar .cap-copy,
+  .cap-pillar.reverse .cap-copy {
     order: 2;
-    padding: 8px 0 0;
-    margin: 0;
-    max-width: none;
   }
 
-  .cap-head {
-    font-size: 34px;
+  .cap-title {
+    font-size: 32px;
   }
 
-  .cap-rail {
-    top: 8px;
+  .cap-phone {
+    width: 200px;
+    height: 380px;
   }
 
-  .cap-pill-label {
-    display: none;
-  }
-}
-
-/* Narrow frames (phones, and the two-column layout around 1024) crowd the still. */
-@container (max-width: 600px) {
-  .cap-tag,
-  .cap-hud {
-    font-size: 9px;
-  }
-
-  .cap-tag {
-    padding: 2px 5px;
-  }
-
-  .cap-hud {
-    top: 8px;
-    left: 8px;
-  }
-
-  .cap-lock {
-    width: 28px;
-    height: 28px;
-  }
-
-  .cap-lock svg {
-    width: 14px;
-    height: 14px;
-  }
-
-  .cap-box .cap-tag:not(.cap-tag-in) {
-    top: calc(100% + 4px);
-    left: 0;
-    right: auto;
-  }
-
-  .cap-box.ignore .cap-tag:not(.cap-tag-in) {
-    top: calc(100% + 14px);
+  .cap-phone-frame {
+    min-height: 430px;
   }
 }
 
@@ -1083,17 +1051,27 @@
     transform: none;
   }
 
-  .cap-section[data-reveal] .cap-panel,
-  .cap-section[data-reveal] .cap-panel:not(.is-in) {
+  .cap-section[data-reveal] .cap-pillar,
+  .cap-section[data-reveal] .cap-pillar:not(.is-in) {
     opacity: 1;
     transform: none;
     transition: none;
   }
 
-  .cap-edge,
-  .cap-node .cap-dot,
-  .cap-pill-dot {
+  .cap-section[data-reveal] .cap-box,
+  .cap-section[data-reveal] .cap-pillar.is-in .cap-box {
+    opacity: 1;
+    transform: none;
     animation: none;
-    transition: none;
+  }
+
+  .cap-notif,
+  .cap-thread-step.is-on .cap-dot {
+    animation: none;
+  }
+
+  .cap-notif {
+    transform: none;
+    opacity: 1;
   }
 }
