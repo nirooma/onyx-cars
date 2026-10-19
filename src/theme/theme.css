@@ -780,6 +780,7 @@
 
 .cap-recog {
   left: 50%;
+  top: calc(100% + 5px);
   transform: translateX(-50%);
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 11px;
@@ -798,7 +799,8 @@
 }
 
 .cap-box.family {
-  border: 1.5px solid #7CDAA0;
+  border: 0;
+  box-shadow: inset 0 0 0 1.5px #7CDAA0;
 }
 
 .cap-box.family .cap-tag {
@@ -809,7 +811,8 @@
 }
 
 .cap-box.unknown {
-  border: 1.5px solid #E5262B;
+  border: 0;
+  box-shadow: inset 0 0 0 1.5px #E5262B;
 }
 
 .cap-box.unknown .cap-tag {
@@ -1030,7 +1033,6 @@
   .cap-recog {
     font-size: 9px;
     padding: 2px 5px;
-    letter-spacing: 0;
   }
 }
 
