@@ -2,16 +2,16 @@ import type { Dictionary } from "./types";
 
 const en: Dictionary = {
   meta: {
-    title: "NightGuard · A home night-guard robot",
+    title: "NightGuard · It stands guard at night",
     description:
-      "A home robot that patrols the entry floor at night, drives to the zone where an alarm fired, checks, deters with light, sound, and presence, and sends blurred evidence to a monitoring center. A prototype. Join the pilot.",
+      "A standalone night guard for villas, cottages, and ground-floor homes. It learns an ordinary night in the house, and when you are away it answers a person with light, a siren, and a photo on your phone. No face recognition. A beta.",
   },
   nav: {
     skip: "Skip to content",
     menu: "Menu",
     close: "Close",
     language: "Language",
-    cta: "Join the pilot",
+    cta: "Join the beta",
     links: [
       { href: "#how", label: "How it works" },
       { href: "#inside", label: "Inside" },
@@ -21,10 +21,10 @@ const en: Dictionary = {
     ],
   },
   hero: {
-    eyebrow: "Prototype · Night watch, indoors",
-    title: "When the alarm fires, it goes to look.",
-    sub: "At night it patrols the entry floor. When an alarm zone fires, it drives there, checks what is happening, deters with light, sound, and presence, and sends blurred evidence to a monitoring center. First market: villas, cottages, and ground-floor homes in Israel, through monitoring centers.",
-    cta: "Join the pilot",
+    eyebrow: "For villas, cottages, and ground-floor homes",
+    title: "It stands guard at night.",
+    sub: "It learns a normal night in your home, and when you are away it answers a person with light, a siren, and a photo on your phone, with no face recognition.",
+    cta: "Join the beta",
     secondary: "How it works",
     note: "A working name. No price, no certification, and no launch date.",
     concept: "Concept renders",
@@ -33,7 +33,7 @@ const en: Dictionary = {
     facts: [
       { label: "Where", value: "Indoors" },
       { label: "Coverage", value: "Entry floor" },
-      { label: "Channel", value: "Monitoring center" },
+      { label: "Channel", value: "Your phone" },
     ],
   },
   problem: {
@@ -240,7 +240,7 @@ const en: Dictionary = {
   },
   footer: {
     working: "NightGuard is a working name.",
-    blurb: "A home night-guard robot. An early prototype for ground-level homes in Israel, with monitoring centers.",
+    blurb: "A standalone night guard for ground-level homes, sold direct. A beta.",
     place: "Israel",
     prototype: "Not for sale",
     concept: "Concept renders",

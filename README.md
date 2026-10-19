@@ -28,7 +28,7 @@ Nothing here is deployed, and the site does not load analytics or other trackers
 
 ## What is on the page
 
-One English screen: wordmark, a short prototype headline, one supporting line, a `[TBD]` mailto for the pilot, the studio hero still, and a one-line “Concept renders” footer. There is no language switcher and the rendered page is left to right.
+One English screen. The hero is the power-on film (`heroMedia` in `src/theme/images.ts`): it plays once, then holds the lit frame. Copy fades in 0.4s after `lightOnTime`. Reduced motion shows `hero-still.webp` instead. The call to action is `Join the beta [TBD]`, a mailto with no address. A one-line “Concept renders” footer sits under it. There is no language switcher and the rendered page is left to right.
 
 The steps, problem, privacy, homeowners, monitoring centers, FAQ, form, and long footer components are unused. `DraftHome` in [`src/components/draft-home.tsx`](src/components/draft-home.tsx) still composes them. Hebrew copy remains in [`src/content/he.ts`](src/content/he.ts).
 
