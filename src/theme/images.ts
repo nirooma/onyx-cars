@@ -4,8 +4,8 @@
  * Drop a new render or video into /public/assets/product and update the
  * matching entry here. Components import `images` and never hard-code paths.
  *
- * heroPoster is the still behind the reveal video (poster + reduced-motion
- * fallback): the studio front 3/4 render.
+ * heroPoster is the studio front 3/4 still (poster + reduced-motion
+ * fallback). The file is graded so the faceted shell reads white on #0B0B0D.
  * nightHallway is the indoor night plate. explodedView is the open-shell
  * still and the poster for the scroll video. Do not add part-label art.
  */
@@ -15,7 +15,7 @@ export const images = {
     kind: "image" as const,
     src: "/assets/product/selected-design.jpg",
     width: 1280,
-    height: 720,
+    height: 529,
   },
   nightHallway: {
     kind: "image" as const,

@@ -15,7 +15,7 @@ npm install
 npm run dev
 ```
 
-Open [http://127.0.0.1:4317/he](http://127.0.0.1:4317/he). Hebrew is the default (`/` redirects to `/he`). English is [/en](http://127.0.0.1:4317/en).
+Open [http://127.0.0.1:4317/](http://127.0.0.1:4317/). `/` serves the English landing. `/he` redirects there. The longer Hebrew and English sections are still in the repo and are not rendered.
 
 ```bash
 npm test
@@ -25,6 +25,12 @@ npm start
 ```
 
 Nothing here is deployed, and the site does not load analytics or other trackers. Pages send `noindex` so a draft is less likely to be indexed if it is hosted by mistake.
+
+## What is on the page
+
+One English screen: wordmark, a short prototype headline, one supporting line, a `[TBD]` mailto for the pilot, the studio hero still, and a one-line “Concept renders” footer. There is no language switcher and the rendered page is left to right.
+
+The steps, problem, privacy, homeowners, monitoring centers, FAQ, form, and long footer components are unused. `DraftHome` in [`src/components/draft-home.tsx`](src/components/draft-home.tsx) still composes them. Hebrew copy remains in [`src/content/he.ts`](src/content/he.ts).
 
 ## Swap the visual language
 

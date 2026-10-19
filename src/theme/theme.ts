@@ -22,6 +22,20 @@ export const theme = {
     lightBar: "#F2F6FF",
     alert: "#E5262B",
     onAlert: "#FFFFFF",
+    /** Running text. Pure white is reserved for the hero headline. */
+    body: "#A1A1A6",
+    heroInk: "#FFFFFF",
+    /** Ghost controls. Not used as a fill. */
+    ghostBorder: "rgba(255,255,255,0.2)",
+  },
+  /** Cards, buttons, inputs, and media on the landing. */
+  radius: "16px",
+  type: {
+    heroWeight: 600,
+    bodyWeight: 400,
+    labelWeight: 500,
+    heroTracking: "-0.042em",
+    labelTracking: "0.08em",
   },
   chamfer: "10px",
   font: {
@@ -59,8 +73,17 @@ export const themeCss = `:root {
   --ng-light: ${theme.color.lightBar};
   --ng-alert: ${theme.color.alert};
   --ng-on-alert: ${theme.color.onAlert};
+  --ng-body: ${theme.color.body};
+  --ng-hero-ink: ${theme.color.heroInk};
+  --ng-ghost-border: ${theme.color.ghostBorder};
   --ng-line: ${line};
   --ng-chamfer: ${theme.chamfer};
+  --ng-radius: ${theme.radius};
+  --ng-hero-weight: ${theme.type.heroWeight};
+  --ng-body-weight: ${theme.type.bodyWeight};
+  --ng-label-weight: ${theme.type.labelWeight};
+  --ng-hero-tracking: ${theme.type.heroTracking};
+  --ng-label-tracking: ${theme.type.labelTracking};
   --ng-glow: 0 0 10px ${lightGlow}, 0 0 28px ${lightGlow};
   --ng-facet: ${facet};
   --background: var(--ng-page);
