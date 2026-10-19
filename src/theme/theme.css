@@ -778,6 +778,14 @@
   text-transform: none;
 }
 
+.cap-recog {
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  letter-spacing: 0.02em;
+  text-transform: none;
+}
+
 .cap-box.ignore {
   border-color: rgba(161, 161, 166, 0.5);
   border-style: dashed;
@@ -1007,6 +1015,14 @@
 @media (max-width: 1024px) {
   .cap-box-pet .cap-tag {
     top: calc(100% + 22px);
+  }
+}
+
+@media (max-width: 390px) {
+  .cap-recog {
+    font-size: 9px;
+    padding: 2px 5px;
+    letter-spacing: 0;
   }
 }
 

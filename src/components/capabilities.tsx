@@ -202,19 +202,16 @@ export function Capabilities() {
               <div className="cap-half">
                 <FramePhoto src={recog.family.image} alt={recog.family.alt} />
                 <div className="cap-overlay" aria-hidden="true">
-                  <div className="cap-box family" style={{ left: "10%", top: "2.5%", width: "20%", height: "43%", animationDelay: "0.2s" }}>
-                    <span className="cap-tag cap-mono">
-                      {recog.family.label.slice(0, -"Dana".length)}
-                      <span className="cap-literal">Dana</span>
-                    </span>
+                  <div className="cap-box family" style={{ left: "36.5%", top: "4%", width: "27.5%", height: "63.5%", animationDelay: "0.2s" }}>
+                    <span className="cap-tag cap-recog">{recog.family.label}</span>
                   </div>
                 </div>
               </div>
               <div className="cap-half">
                 <FramePhoto src={recog.unknown.image} alt={recog.unknown.alt} />
                 <div className="cap-overlay" aria-hidden="true">
-                  <div className="cap-box unknown" style={{ left: "15.4%", top: "2.5%", width: "21.2%", height: "43%", animationDelay: "0.35s" }}>
-                    <span className="cap-tag cap-mono">{recog.unknown.label}</span>
+                  <div className="cap-box unknown" style={{ left: "41.5%", top: "4%", width: "29%", height: "61.5%", animationDelay: "0.35s" }}>
+                    <span className="cap-tag cap-recog">{recog.unknown.label}</span>
                   </div>
                 </div>
               </div>
