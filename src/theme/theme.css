@@ -423,8 +423,12 @@
         transparent 0%,
         rgba(0, 0, 0, 0.4) 2%,
         #000 7%,
-        #000 97%,
-        rgba(0, 0, 0, 0.45) 99%,
+        #000 75%,
+        rgba(0, 0, 0, 0.96) 78%,
+        rgba(0, 0, 0, 0.81) 82%,
+        rgba(0, 0, 0, 0.53) 87%,
+        rgba(0, 0, 0, 0.26) 92%,
+        rgba(0, 0, 0, 0.07) 96%,
         transparent 100%
       );
     -webkit-mask-composite: source-in;
@@ -446,8 +450,12 @@
         transparent 0%,
         rgba(0, 0, 0, 0.4) 2%,
         #000 7%,
-        #000 97%,
-        rgba(0, 0, 0, 0.45) 99%,
+        #000 75%,
+        rgba(0, 0, 0, 0.96) 78%,
+        rgba(0, 0, 0, 0.81) 82%,
+        rgba(0, 0, 0, 0.53) 87%,
+        rgba(0, 0, 0, 0.26) 92%,
+        rgba(0, 0, 0, 0.07) 96%,
         transparent 100%
       );
     mask-composite: intersect;
@@ -507,6 +515,35 @@
   }
 }
 
+.rotate-pin {
+  position: relative;
+  height: var(--rotate-pin, 400vh);
+  background: #0B0A0D;
+}
+
+.rotate-sticky {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+  background: #0B0A0D;
+}
+
+.rotate-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: #0B0A0D;
+}
+
+.rotate-poster {
+  display: none;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #0B0A0D;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .rise,
   .hero-bar,
@@ -514,5 +551,17 @@
     animation: none;
     opacity: 1;
     transform: none;
+  }
+
+  .rotate-pin {
+    height: 100svh;
+  }
+
+  .rotate-canvas {
+    display: none;
+  }
+
+  .rotate-poster {
+    display: block;
   }
 }

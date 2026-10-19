@@ -44,6 +44,20 @@ Product design owns two files. Components do not hard-code colors, fonts, or med
 
 `heroMedia` names the power-on films, the dark posters, and the lit stills. `selected-design.jpg` remains the earlier studio still and is not the hero fallback. The open-shell sequence scrubs with scroll; reduced motion shows `exploded-view.jpg` instead. Do not add part labels or component specs to that section.
 
+## Drop in the 360° frames
+
+`rotateMedia` in [`src/theme/images.ts`](src/theme/images.ts) is the only config for the turn after the hero. The section is not rendered until every file below exists, so the live page stays the signed-off hero. Do not add stand-in frames.
+
+```text
+public/assets/product/rotate/desktop/frame_000.webp … frame_119.webp
+public/assets/product/rotate/desktop/poster.webp
+public/assets/product/rotate/mobile/frame_000.webp … frame_119.webp
+public/assets/product/rotate/mobile/poster.webp
+public/assets/product/rotate/scrub.mp4
+```
+
+`frame_000.webp` is frame 0. A count of 120 ends at `frame_119.webp`. Posters are the reduced-motion stills. `scrub.mp4` is the all-intra film that ships with the set; the page draws the WebP frames. Background is `rgb(11, 10, 13)`. After the files are in place, rebuild. The exploded view mounts after the rotation and stays unrendered (`explodedMedia.enabled` is false).
+
 Keep video files under about 2 MB, except `hero-poweron-1080p.mp4`, which is the approved 4.6 MB desktop fallback.
 
 ## Pilot form

@@ -1,7 +1,16 @@
 import assert from "node:assert/strict";
 import { existsSync, statSync } from "node:fs";
+import path from "node:path";
 import { describe, it } from "node:test";
-import { heroMedia, images } from "./images.ts";
+import {
+  explodedMedia,
+  frameIndexForProgress,
+  heroMedia,
+  images,
+  rotateFrameSrc,
+  rotateMedia,
+  rotateRequiredSrcs,
+} from "./images.ts";
 
 const MAX_VIDEO_BYTES = 2 * 1024 * 1024;
 /** Designer-approved desktop hero. The 2 MB cap does not apply to this file. */
@@ -43,5 +52,23 @@ describe("product media manifest", () => {
     const desktopMp4 = statSync(APPROVED_LARGE_HERO).size;
     assert.ok(desktopMp4 > MAX_VIDEO_BYTES);
     assert.ok(desktopMp4 < 8 * 1024 * 1024);
+  });
+
+  it("keeps the rotation sequence configurable and unmounted without frames", () => {
+    assert.equal(rotateMedia.frameCount, 120);
+    assert.equal(rotateMedia.pinLengthVh, 400);
+    assert.equal(rotateMedia.background, "#0B0A0D");
+    assert.equal(rotateFrameSrc("desktop", 0), "/assets/product/rotate/desktop/frame_000.webp");
+    assert.equal(rotateFrameSrc("desktop", 119), "/assets/product/rotate/desktop/frame_119.webp");
+    assert.equal(rotateFrameSrc("mobile", 7), "/assets/product/rotate/mobile/frame_007.webp");
+    assert.equal(frameIndexForProgress(0, 120), 0);
+    assert.equal(frameIndexForProgress(1, 120), 119);
+    assert.equal(frameIndexForProgress(0.5, 120), 60);
+    assert.equal(explodedMedia.enabled, false);
+    const missing = rotateRequiredSrcs().filter((src) => {
+      const relative = path.join("public", src.replace(/^\//, ""));
+      return !existsSync(relative);
+    });
+    assert.equal(missing.length, rotateRequiredSrcs().length);
   });
 });

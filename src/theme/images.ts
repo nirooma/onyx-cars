@@ -104,3 +104,66 @@ export const heroMedia = {
 
 /** Portrait cut, including the 768px boundary. */
 export const HERO_MOBILE_MQ = "(max-width: 768px)";
+
+/**
+ * Scroll-scrubbed 360° turn. One entry owns the frame sets, posters, and pin.
+ * Files are not in the repo yet. The section stays unmounted until both sets
+ * and both posters exist; see `rotateSequenceReady`.
+ *
+ * Desktop frames: public/assets/product/rotate/desktop/frame_000.webp … frame_119.webp
+ * Mobile frames:  public/assets/product/rotate/mobile/frame_000.webp … frame_119.webp
+ * Index 0 is the first frame. `frameCount` of 120 uses 000 through 119.
+ */
+export const rotateMedia = {
+  frameCount: 120,
+  framePad: 3,
+  /** Total height of the pinned section, in vh. The sticky frame is one viewport. */
+  pinLengthVh: 400,
+  background: "#0B0A0D",
+  desktop: {
+    directory: "/assets/product/rotate/desktop",
+    poster: "/assets/product/rotate/desktop/poster.webp",
+  },
+  mobile: {
+    directory: "/assets/product/rotate/mobile",
+    poster: "/assets/product/rotate/mobile/poster.webp",
+  },
+  /** All-intra scrub film delivered with the frames. The page draws the WebP sequence. */
+  scrubVideo: "/assets/product/rotate/scrub.mp4",
+} as const;
+
+export type RotateCut = "desktop" | "mobile";
+
+export function rotateFrameSrc(cut: RotateCut, index: number) {
+  const last = rotateMedia.frameCount - 1;
+  const clipped = Math.min(last, Math.max(0, index));
+  const name = `frame_${String(clipped).padStart(rotateMedia.framePad, "0")}.webp`;
+  return `${rotateMedia[cut].directory}/${name}`;
+}
+
+/** Map a 0..1 scroll progress through the pin to a frame index 0..count-1. */
+export function frameIndexForProgress(progress: number, count: number) {
+  const total = Math.max(1, count);
+  const clamped = Math.min(1, Math.max(0, progress));
+  return Math.round(clamped * (total - 1));
+}
+
+/** Paths that must all exist before the rotation section mounts. */
+export function rotateRequiredSrcs() {
+  const cuts: RotateCut[] = ["desktop", "mobile"];
+  const srcs: string[] = [];
+  for (const cut of cuts) {
+    srcs.push(rotateFrameSrc(cut, 0));
+    srcs.push(rotateFrameSrc(cut, rotateMedia.frameCount - 1));
+    srcs.push(rotateMedia[cut].poster);
+  }
+  return srcs;
+}
+
+/**
+ * Open-shell sequence that follows the rotation. Unrendered.
+ * Leave `enabled` false until that delivery exists. Do not point it at stand-in art.
+ */
+export const explodedMedia = {
+  enabled: false,
+} as const;
