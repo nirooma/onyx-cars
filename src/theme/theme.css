@@ -934,6 +934,11 @@
   cursor: ew-resize;
 }
 
+.cap-slider img {
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
+
 .cap-slider-lit {
   position: absolute;
   inset: 0;
