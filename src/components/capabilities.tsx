@@ -6,6 +6,33 @@ import { capabilities } from "@/content/capabilities";
 
 const SIZES = "(max-width: 860px) 100vw, 64vw";
 
+const UNIT_TOKENS = ["87 dB(A)", "0.05–12 m", "10 Hz", "20 s", "6 min"] as const;
+
+function unitText(token: string) {
+  return token.replace(" ", "\u00A0");
+}
+
+function LiteralText({ text }: { text: string }) {
+  const pattern = new RegExp(
+    `(${UNIT_TOKENS.map((token) => token.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|")})`,
+    "g",
+  );
+  const parts = text.split(pattern);
+  return (
+    <>
+      {parts.map((part, index) =>
+        (UNIT_TOKENS as readonly string[]).includes(part) ? (
+          <span key={index} className={part === "87 dB(A)" ? "cap-literal cap-red" : "cap-literal"}>
+            {unitText(part)}
+          </span>
+        ) : (
+          part
+        ),
+      )}
+    </>
+  );
+}
+
 const THREAD_FOR_PILLAR: Record<string, number> = {
   ai: 1,
   sensors: 1,
@@ -120,13 +147,13 @@ export function Capabilities() {
               <FramePhoto src={ai.image} alt={ai.alt} />
               <div className="cap-overlay" aria-hidden="true">
                 <span className="cap-hud cap-mono">Live · On-device</span>
-                <div className="cap-box" style={{ left: "46%", top: "16%", width: "15%", height: "50%", animationDelay: "0.15s" }}>
+                <div className="cap-box" style={{ left: "34.3%", top: "2.6%", width: "9.2%", height: "42.6%", animationDelay: "0.15s" }}>
                   <span className="cap-tag cap-mono">Person</span>
                 </div>
-                <div className="cap-box ignore" style={{ left: "12%", top: "50%", width: "15%", height: "20%", animationDelay: "0.35s" }}>
+                <div className="cap-box ignore cap-box-pet" style={{ left: "16.6%", top: "37%", width: "8.2%", height: "16.8%", animationDelay: "0.35s" }}>
                   <span className="cap-tag cap-mono">Pet · ignored</span>
                 </div>
-                <div className="cap-box ignore" style={{ left: "70%", top: "10%", width: "22%", height: "58%", animationDelay: "0.5s" }}>
+                <div className="cap-box ignore" style={{ left: "75.5%", top: "0%", width: "24%", height: "48%", animationDelay: "0.5s" }}>
                   <span className="cap-tag cap-tag-end cap-mono">Curtain · ignored</span>
                 </div>
               </div>
@@ -150,7 +177,9 @@ export function Capabilities() {
               <FramePhoto src={sensors.image} alt={sensors.alt} />
               <div className="cap-sensor-tags cap-mono">
                 {sensors.chips.map((chip) => (
-                  <span key={chip}>{chip}</span>
+                  <span key={chip}>
+                    <LiteralText text={chip} />
+                  </span>
                 ))}
               </div>
             </div>
@@ -173,15 +202,18 @@ export function Capabilities() {
               <div className="cap-half">
                 <FramePhoto src={recog.family.image} alt={recog.family.alt} />
                 <div className="cap-overlay" aria-hidden="true">
-                  <div className="cap-box family" style={{ left: "8%", top: "6%", width: "34%", height: "40%", animationDelay: "0.2s" }}>
-                    <span className="cap-tag cap-mono">{recog.family.label}</span>
+                  <div className="cap-box family" style={{ left: "10%", top: "2.5%", width: "20%", height: "43%", animationDelay: "0.2s" }}>
+                    <span className="cap-tag cap-mono">
+                      {recog.family.label.slice(0, -"Dana".length)}
+                      <span className="cap-literal">Dana</span>
+                    </span>
                   </div>
                 </div>
               </div>
               <div className="cap-half">
                 <FramePhoto src={recog.unknown.image} alt={recog.unknown.alt} />
                 <div className="cap-overlay" aria-hidden="true">
-                  <div className="cap-box unknown" style={{ left: "7%", top: "5%", width: "36%", height: "42%", animationDelay: "0.35s" }}>
+                  <div className="cap-box unknown" style={{ left: "15.4%", top: "2.5%", width: "21.2%", height: "43%", animationDelay: "0.35s" }}>
                     <span className="cap-tag cap-mono">{recog.unknown.label}</span>
                   </div>
                 </div>
@@ -224,14 +256,12 @@ export function Capabilities() {
                     <p className="cap-mode cap-mono">
                       <strong>Away</strong>
                       {" — "}
-                      {alerts.away.split("87 dB(A)")[0]}
-                      <span className="cap-red">87 dB(A)</span>
-                      {alerts.away.split("87 dB(A)")[1]}
+                      <LiteralText text={alerts.away} />
                     </p>
                     <p className="cap-mode cap-mono">
                       <strong>Home-night</strong>
                       {" — "}
-                      {alerts.home}
+                      <LiteralText text={alerts.home} />
                     </p>
                   </div>
                 </div>
