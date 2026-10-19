@@ -370,14 +370,17 @@
   .hero-screen {
     display: grid;
     grid-template-columns: minmax(16.5rem, 30vw) minmax(0, 1fr);
-    align-items: stretch;
+    align-items: center;
   }
 
   .hero-reveal-copy {
     position: relative;
+    z-index: 2;
     top: auto;
     right: auto;
     left: auto;
+    grid-column: 1;
+    grid-row: 1;
     align-self: center;
     min-height: 0;
     max-width: none;
@@ -386,24 +389,84 @@
 
   .hero-visual {
     position: relative;
+    z-index: 1;
     top: auto;
     right: auto;
     bottom: auto;
     left: auto;
-    height: 100%;
-    min-height: 100svh;
+    grid-column: 1 / -1;
+    grid-row: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-self: center;
+    width: auto;
+    height: auto;
+    min-height: 0;
+    margin-right: 5vw;
+    pointer-events: none;
+    background: #0B0A0D;
+    -webkit-mask-image:
+      linear-gradient(
+        to right,
+        transparent 0%,
+        rgba(0, 0, 0, 0.04) 8%,
+        rgba(0, 0, 0, 0.14) 16%,
+        rgba(0, 0, 0, 0.36) 20%,
+        rgba(0, 0, 0, 0.68) 23%,
+        #000 25%,
+        #000 94%,
+        rgba(0, 0, 0, 0.4) 97.5%,
+        transparent 100%
+      ),
+      linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(0, 0, 0, 0.4) 2%,
+        #000 7%,
+        #000 97%,
+        rgba(0, 0, 0, 0.45) 99%,
+        transparent 100%
+      );
+    -webkit-mask-composite: source-in;
+    mask-image:
+      linear-gradient(
+        to right,
+        transparent 0%,
+        rgba(0, 0, 0, 0.04) 8%,
+        rgba(0, 0, 0, 0.14) 16%,
+        rgba(0, 0, 0, 0.36) 20%,
+        rgba(0, 0, 0, 0.68) 23%,
+        #000 25%,
+        #000 94%,
+        rgba(0, 0, 0, 0.4) 97.5%,
+        transparent 100%
+      ),
+      linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(0, 0, 0, 0.4) 2%,
+        #000 7%,
+        #000 97%,
+        rgba(0, 0, 0, 0.45) 99%,
+        transparent 100%
+      );
+    mask-composite: intersect;
   }
 
   .hero-video-wrap {
-    position: absolute;
-    inset: 0;
-    width: auto;
+    position: relative;
+    inset: auto;
+    width: 78vw;
     height: auto;
-    aspect-ratio: auto;
+    aspect-ratio: 16 / 9;
+    flex: none;
+    -webkit-mask-image: none;
+    mask-image: none;
   }
 
   .hero-video,
   .hero-plate {
+    object-fit: contain;
     object-position: center center;
   }
 
