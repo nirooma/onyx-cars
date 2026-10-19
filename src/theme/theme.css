@@ -1010,9 +1010,20 @@
   }
 }
 
-@media (max-width: 390px) {
+@media (max-width: 480px) {
   .cap-hud {
-    left: 6px;
+    top: auto;
+    right: auto;
+    bottom: 6px;
+    left: 8px;
+  }
+}
+
+@media (max-width: 360px) {
+  .cap-tag-end {
+    font-size: 9px;
+    padding: 2px 5px;
+    letter-spacing: 0.04em;
   }
 }
 
