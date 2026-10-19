@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { heroMedia, HERO_VIDEO_SCALE } from "@/theme/images";
+import { heroMedia } from "@/theme/images";
 
-const COPY_DELAY_S = 0.4;
+const STALL_MS = 2500;
 
 export function HeroReveal({
   eyebrow,
@@ -27,57 +27,111 @@ export function HeroReveal({
   const [booted, setBooted] = useState(false);
   const [copyOn, setCopyOn] = useState(false);
   const [holding, setHolding] = useState(false);
+  const [useStill, setUseStill] = useState(false);
+  const [presented, setPresented] = useState(false);
+  const [cut, setCut] = useState<"desktop" | "mobile" | null>(null);
 
   useEffect(() => {
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const apply = () => setReduced(media.matches);
+    const apply = () => {
+      const next = media.matches;
+      setReduced(next);
+      if (next) {
+        setUseStill(true);
+        setCopyOn(true);
+      }
+      setBooted(true);
+    };
     apply();
-    setBooted(true);
     media.addEventListener("change", apply);
     return () => media.removeEventListener("change", apply);
   }, []);
 
   useEffect(() => {
-    if (!booted || reduced) return;
+    const mq = window.matchMedia("(max-width: 768px)");
+    const apply = () => setCut(mq.matches ? "mobile" : "desktop");
+    apply();
+    mq.addEventListener("change", apply);
+    return () => mq.removeEventListener("change", apply);
+  }, []);
+
+  useEffect(() => {
+    if (!booted || reduced || useStill || !cut) return;
     const video = videoRef.current;
     if (!video) return;
 
     let revealed = false;
+    let stopped = false;
     const show = () => {
       if (revealed) return;
       revealed = true;
       setCopyOn(true);
     };
-    const revealAt = heroMedia.lightOnTime + COPY_DELAY_S;
+    const giveUp = () => {
+      if (stopped || video.ended) return;
+      stopped = true;
+      setUseStill(true);
+      show();
+    };
     const onTime = () => {
-      if (video.currentTime >= revealAt) show();
+      if (video.currentTime >= heroMedia.lightOnTime) show();
     };
     const hold = () => {
       video.pause();
-      if (Number.isFinite(video.duration) && video.duration > 0) {
-        const frame = Math.max(0, video.duration - 0.04);
-        if (Math.abs(video.currentTime - frame) > 0.08) video.currentTime = frame;
-      }
       setHolding(true);
       show();
     };
-    video.addEventListener("timeupdate", onTime);
-    video.addEventListener("ended", hold);
-    const fallback = window.setTimeout(show, (revealAt + 1.5) * 1000);
-    const played = video.play();
-    played.catch(() => {
-      window.clearTimeout(fallback);
-      window.setTimeout(show, 700);
-    });
-    return () => {
-      video.removeEventListener("timeupdate", onTime);
-      video.removeEventListener("ended", hold);
-      window.clearTimeout(fallback);
-    };
-  }, [booted, reduced]);
 
-  const cap = Math.round(heroMedia.desktopVideo.width * HERO_VIDEO_SCALE);
-  const showVideo = booted && !reduced;
+    let last = -1;
+    let progressedAt = performance.now();
+    const mark = () => {
+      if (video.currentTime > last + 0.01) {
+        last = video.currentTime;
+        progressedAt = performance.now();
+      }
+      onTime();
+    };
+    const watch = window.setInterval(() => {
+      if (stopped || video.ended) return;
+      if (performance.now() - progressedAt > STALL_MS) giveUp();
+    }, 400);
+
+    const onPresented = () => setPresented(true);
+    video.addEventListener("timeupdate", mark);
+    video.addEventListener("seeked", onTime);
+    video.addEventListener("loadeddata", onPresented);
+    video.addEventListener("playing", onPresented);
+    video.addEventListener("ended", hold);
+    video.addEventListener("error", giveUp);
+
+    let frame = 0;
+    const tick = () => {
+      if (stopped) return;
+      mark();
+      if (!video.paused && !video.ended) frame = requestAnimationFrame(tick);
+    };
+    const played = video.play();
+    played.then(() => {
+      frame = requestAnimationFrame(tick);
+    }).catch(() => giveUp());
+
+    return () => {
+      stopped = true;
+      cancelAnimationFrame(frame);
+      window.clearInterval(watch);
+      video.removeEventListener("timeupdate", mark);
+      video.removeEventListener("seeked", onTime);
+      video.removeEventListener("loadeddata", onPresented);
+      video.removeEventListener("playing", onPresented);
+      video.removeEventListener("ended", hold);
+      video.removeEventListener("error", giveUp);
+    };
+  }, [booted, reduced, useStill, cut]);
+
+  const showVideo = booted && !reduced && !useStill && cut !== null;
+  const showFinal = holding || useStill || reduced;
+  const showPoster = !showFinal && !presented;
+  const plateAlt = showFinal ? stillAlt : "";
 
   return (
     <>
@@ -92,56 +146,64 @@ export function HeroReveal({
           </a>
         </div>
       </div>
-      <figure className="hero-visual" style={{ ["--hero-cap" as string]: String(cap) }}>
-        {showVideo ? (
-          <div className="hero-video-wrap">
+      <figure className="hero-visual">
+        <div className={`hero-video-wrap${showPoster ? " is-poster" : ""}${showFinal ? " is-hold" : ""}`}>
+          {showVideo ? (
             <video
+              key={cut}
               ref={videoRef}
               className="hero-video"
               muted
               playsInline
               autoPlay
               preload="auto"
-              poster={heroMedia.poster.src}
-              width={heroMedia.desktopVideo.width}
-              height={heroMedia.desktopVideo.height}
+              width={cut === "mobile" ? heroMedia.mobileVideo.width : heroMedia.desktopVideo.width}
+              height={cut === "mobile" ? heroMedia.mobileVideo.height : heroMedia.desktopVideo.height}
               aria-label={videoLabel}
             >
-              <source
-                media="(max-width: 767px)"
-                src={heroMedia.mobileVideo.webm}
-                type="video/webm"
-              />
-              <source
-                media="(max-width: 767px)"
-                src={heroMedia.mobileVideo.src}
-                type="video/mp4"
-              />
-              <source src={heroMedia.desktopVideo.webm} type="video/webm" />
-              <source src={heroMedia.desktopVideo.src} type="video/mp4" />
+              {cut === "mobile" ? (
+                <source src={heroMedia.mobileVideo.src} type="video/mp4" />
+              ) : (
+                <>
+                  <source src={heroMedia.desktopVideo.webm} type="video/webm" />
+                  <source src={heroMedia.desktopVideo.src} type="video/mp4" />
+                </>
+              )}
             </video>
-            {/* eslint-disable-next-line @next/next/no-img-element -- overlays the video at the same pixels */}
-            <img
-              className={holding ? "hero-final is-on" : "hero-final"}
-              src={heroMedia.finalFrame.src}
-              alt=""
-              width={heroMedia.finalFrame.width}
-              height={heroMedia.finalFrame.height}
-            />
-          </div>
-        ) : (
-          <div className="hero-still-wrap">
-            <div className="hero-still-glow" aria-hidden="true" />
-            {/* eslint-disable-next-line @next/next/no-img-element -- transparent still, kept unoptimized */}
-            <img
-              className="hero-still"
-              src={reduced ? heroMedia.reducedMotionStill.src : heroMedia.poster.src}
-              alt={reduced ? stillAlt : ""}
-              width={reduced ? heroMedia.reducedMotionStill.width : heroMedia.poster.width}
-              height={reduced ? heroMedia.reducedMotionStill.height : heroMedia.poster.height}
-            />
-          </div>
-        )}
+          ) : null}
+          {/* eslint-disable-next-line @next/next/no-img-element -- dark first frame, hidden once the film is showing */}
+          <img
+            className="hero-plate hero-poster hero-plate-desktop"
+            src={heroMedia.poster.src}
+            alt=""
+            width={heroMedia.poster.width}
+            height={heroMedia.poster.height}
+          />
+          {/* eslint-disable-next-line @next/next/no-img-element -- portrait dark first frame */}
+          <img
+            className="hero-plate hero-poster hero-plate-mobile"
+            src={heroMedia.posterMobile.src}
+            alt=""
+            width={heroMedia.posterMobile.width}
+            height={heroMedia.posterMobile.height}
+          />
+          {/* eslint-disable-next-line @next/next/no-img-element -- lit hold, full brightness, no fade */}
+          <img
+            className="hero-plate hero-final hero-plate-desktop"
+            src={heroMedia.finalFrame.src}
+            alt={plateAlt}
+            width={heroMedia.finalFrame.width}
+            height={heroMedia.finalFrame.height}
+          />
+          {/* eslint-disable-next-line @next/next/no-img-element -- portrait lit hold */}
+          <img
+            className="hero-plate hero-final hero-plate-mobile"
+            src={heroMedia.finalFrameMobile.src}
+            alt=""
+            width={heroMedia.finalFrameMobile.width}
+            height={heroMedia.finalFrameMobile.height}
+          />
+        </div>
       </figure>
     </>
   );

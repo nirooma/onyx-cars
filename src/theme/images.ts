@@ -29,12 +29,18 @@ export const images = {
     width: 1280,
     height: 720,
   },
+  posterDark: {
+    kind: "image" as const,
+    src: "/assets/product/poster-dark.jpg",
+    width: 1920,
+    height: 1080,
+  },
   heroVideo: {
     kind: "video" as const,
-    src: "/assets/product/hero-reveal.mp4",
-    poster: "heroPoster" as const,
-    width: 848,
-    height: 480,
+    src: "/assets/product/hero-poweron-1080p.mp4",
+    poster: "posterDark" as const,
+    width: 1920,
+    height: 1080,
   },
   explodeVideo: {
     kind: "video" as const,
@@ -54,43 +60,47 @@ export function posterSrc(id: "heroVideo" | "explodeVideo") {
 
 /**
  * Power-on hero. Swap the film by editing this object and the files it
- * names. Nothing else in the player needs to change.
+ * names. The player reads breakpoints, posters, and lightOnTime from here.
  *
- * mobileVideo may point at the desktop file until a portrait cut exists.
- * The player selects it with a portrait media query.
- * Copy fades in 0.4s after lightOnTime.
+ * Desktop sources: WebM first, MP4 fallback. Mobile (max-width 768px) is
+ * the portrait MP4 only. Copy fades in at lightOnTime, when the bar is fully on.
+ * Reduced motion, a stall, or blocked autoplay shows the lit still.
  */
 export const heroMedia = {
   desktopVideo: {
-    src: "/assets/product/hero-reveal.mp4",
-    webm: "/assets/product/hero-reveal.webm",
-    width: 848,
-    height: 480,
+    webm: "/assets/product/hero-poweron-1080p.webm",
+    src: "/assets/product/hero-poweron-1080p.mp4",
+    width: 1920,
+    height: 1080,
   },
   mobileVideo: {
-    src: "/assets/product/hero-reveal.mp4",
-    webm: "/assets/product/hero-reveal.webm",
-    width: 848,
-    height: 480,
+    src: "/assets/product/hero-poweron-mobile.mp4",
+    width: 1080,
+    height: 1350,
   },
   poster: {
-    src: "/assets/product/hero-reveal-poster.jpg",
-    width: 848,
-    height: 480,
+    src: "/assets/product/poster-dark.jpg",
+    width: 1920,
+    height: 1080,
+  },
+  posterMobile: {
+    src: "/assets/product/poster-dark-mobile.jpg",
+    width: 1080,
+    height: 1350,
   },
   finalFrame: {
-    src: "/assets/product/hero-reveal-final.jpg",
-    width: 848,
-    height: 480,
+    src: "/assets/product/final-lit.jpg",
+    width: 1920,
+    height: 1080,
   },
-  /** Seconds from the start when the light bar is visibly on. */
-  lightOnTime: 2.1,
-  reducedMotionStill: {
-    src: "/assets/product/hero-still.webp",
-    width: 1124,
-    height: 546,
+  finalFrameMobile: {
+    src: "/assets/product/final-lit-mobile.jpg",
+    width: 1080,
+    height: 1350,
   },
+  /** Seconds from the start when the light bar is fully on. Copy starts here. */
+  lightOnTime: 1.9,
 } as const;
 
-/** Do not draw the current low-res film larger than this multiple of its width. */
-export const HERO_VIDEO_SCALE = 1.1;
+/** Portrait cut, including the 768px boundary. */
+export const HERO_MOBILE_MQ = "(max-width: 768px)";

@@ -4,7 +4,7 @@
 
 Marketing site for an early-stage Israeli robotics prototype: a home night-guard robot. **NightGuard is a working name.** The product name is not decided.
 
-At night the robot patrols the entry floor indoors. When an alarm zone fires it drives there, checks what is happening, deters with light, sound, and presence, and sends privacy-blurred evidence to a professional monitoring center. The first market is villas, cottages, and ground-floor homes in Israel, reached through monitoring centers. This site recruits a pilot. It is not a store.
+It is a standalone night guard, sold direct to homeowners of villas, cottages, and ground-floor apartments. It learns a normal night in the house. When you are away and it detects a person, it answers with light, a siren, and a photo on your phone. It does not use face recognition. This site recruits a beta. It is not a store.
 
 The visuals are concept renders. The page says so.
 
@@ -28,7 +28,7 @@ Nothing here is deployed, and the site does not load analytics or other trackers
 
 ## What is on the page
 
-One English screen. The hero is the power-on film (`heroMedia` in `src/theme/images.ts`): it plays once, then holds the lit frame. Copy fades in 0.4s after `lightOnTime`. Reduced motion shows `hero-still.webp` instead. The call to action is `Join the beta [TBD]`, a mailto with no address. A one-line “Concept renders” footer sits under it. There is no language switcher and the rendered page is left to right.
+One English screen. The hero is the power-on film (`heroMedia` in `src/theme/images.ts`). Desktop plays the 1080p WebM, then the MP4. Viewports at 768px and below play the portrait MP4. It plays once, muted, and holds the last frame. The headline and call to action fade in at `lightOnTime` (1.9s), over 600ms. Reduced motion, a stall, or blocked autoplay shows `final-lit.jpg` (or the portrait still). The call to action is `Join the beta [TBD]`, a mailto with no address. A one-line “Concept renders” footer sits under it. There is no language switcher and the rendered page is left to right.
 
 The steps, problem, privacy, homeowners, monitoring centers, FAQ, form, and long footer components are unused. `DraftHome` in [`src/components/draft-home.tsx`](src/components/draft-home.tsx) still composes them. Hebrew copy remains in [`src/content/he.ts`](src/content/he.ts).
 
@@ -42,11 +42,9 @@ Product design owns two files. Components do not hard-code colors, fonts, or med
 | Chamfer, light bar, and facet-line behavior | [`src/theme/theme.css`](src/theme/theme.css) (uses the variables from `theme.ts`, no extra hues) |
 | Product stills and videos | [`src/theme/images.ts`](src/theme/images.ts) and the files in [`public/assets/product/`](public/assets/product/) |
 
-`heroPoster` is the studio front 3/4 still at `public/assets/product/selected-design.jpg`. The hero video, the night interior plate, and the open-shell scroll video stay on their own keys. The earlier frame grabbed from the reveal video remains in the folder as `hero-reveal-poster.jpg` and is no longer the poster.
+`heroMedia` names the power-on films, the dark posters, and the lit stills. `selected-design.jpg` remains the earlier studio still and is not the hero fallback. The open-shell sequence scrubs with scroll; reduced motion shows `exploded-view.jpg` instead. Do not add part labels or component specs to that section.
 
-The hero reveal plays only when the visitor has not asked for reduced motion. Otherwise the poster still stays in place. The open-shell sequence scrubs with scroll; reduced motion shows `exploded-view.jpg` instead. Do not add part labels or component specs to that section.
-
-Keep video files under about 2 MB.
+Keep video files under about 2 MB, except `hero-poweron-1080p.mp4`, which is the approved 4.6 MB desktop fallback.
 
 ## Pilot form
 
