@@ -1,13 +1,13 @@
 export function BrandName() {
   return (
     <span className="font-display" dir="ltr" translate="no">
-      NightGuard
+      Stillward
     </span>
   );
 }
 
 export function Rich({ text }: { text: string }) {
-  const parts = text.split(/(\[TBD\]|NightGuard)/g);
+  const parts = text.split(/(\[TBD\]|Stillward)/g);
   return (
     <>
       {parts.map((part, index) => {
@@ -18,7 +18,7 @@ export function Rich({ text }: { text: string }) {
             </span>
           );
         }
-        if (part === "NightGuard") {
+        if (part === "Stillward") {
           return <BrandName key={index} />;
         }
         return <span key={index}>{part}</span>;

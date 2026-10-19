@@ -2,7 +2,7 @@ import type { Dictionary } from "./types";
 
 const en: Dictionary = {
   meta: {
-    title: "NightGuard · It stands guard at night",
+    title: "Stillward · It stands guard at night",
     description:
       "A standalone night guard for villas, cottages, and ground-floor homes. It learns an ordinary night in the house, and when you are away it answers a person with light, a siren, and a photo on your phone. No face recognition. A beta.",
   },
@@ -139,7 +139,7 @@ const en: Dictionary = {
   centers: {
     kicker: "For monitoring centers",
     title: "A verification layer on the alarm you already run.",
-    body: "NightGuard is not here to replace a monitoring center. It is meant to give a clearer picture before someone calls the home or sends a car. We are looking for a small number of centers for a pilot, starting with staged events.",
+    body: "Stillward is not here to replace a monitoring center. It is meant to give a clearer picture before someone calls the home or sends a car. We are looking for a small number of centers for a pilot, starting with staged events.",
     points: [
       "Less guesswork when a zone fires",
       "Blurred evidence, and a person still decides",
@@ -239,7 +239,7 @@ const en: Dictionary = {
     cta: "To the form",
   },
   footer: {
-    working: "NightGuard is a working name.",
+    working: "Stillward is a working name.",
     blurb: "A standalone night guard for ground-level homes, sold direct. A beta.",
     place: "Israel",
     prototype: "Not for sale",

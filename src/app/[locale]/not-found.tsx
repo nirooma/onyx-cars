@@ -8,7 +8,7 @@ export default function NotFound() {
         <Logo className="justify-center" />
         <p className="mt-6 font-display text-5xl">404</p>
         <Link href="/" className="mt-6 inline-block text-sm text-shade">
-          NightGuard
+          Stillward
         </Link>
       </div>
     </main>

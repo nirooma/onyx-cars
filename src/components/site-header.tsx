@@ -49,7 +49,7 @@ export function SiteHeader({ locale, t }: { locale: Locale; t: Dictionary["nav"]
         {t.skip}
       </a>
       <div className="mx-auto flex h-16 max-w-6xl items-center gap-4 px-5 sm:px-8">
-        <a href={`/${locale}`} className="text-shell" aria-label="NightGuard">
+        <a href={`/${locale}`} className="text-shell" aria-label="Stillward">
           <Logo />
         </a>
         <nav className="ms-auto hidden items-center gap-6 lg:flex" aria-label={t.menu}>

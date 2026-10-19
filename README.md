@@ -1,8 +1,8 @@
 # onyx-cars
 
-# NightGuard
+# Stillward
 
-Marketing site for an early-stage Israeli robotics prototype: a home night-guard robot. **NightGuard is a working name.** The product name is not decided.
+Marketing site for an early-stage Israeli robotics prototype: a home night-guard robot. The brand is Stillward. The product is Stillward One. The dock is the Post.
 
 It is a standalone night guard, sold direct to homeowners of villas, cottages, and ground-floor apartments. It learns a normal night in the house. When you are away and it detects a person, it answers with light, a siren, and a photo on your phone. It does not use face recognition. This site recruits a beta. It is not a store.
 

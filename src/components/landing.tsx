@@ -24,7 +24,7 @@ export function Landing() {
           Skip to content
         </a>
         <header className="landing-nav">
-          <Link href="/" className="text-shell" aria-label="NightGuard">
+          <Link href="/" className="text-shell" aria-label="Stillward">
             <Logo />
           </Link>
           <a className="btn btn-primary nav-cta" href={pilotMail}>
@@ -43,9 +43,7 @@ export function Landing() {
           />
         </main>
         <footer className="landing-foot">
-          <p>
-            {t.concept}. NightGuard is a working name.
-          </p>
+          <p>Concept renders.</p>
         </footer>
       </div>
       {showRotate ? <RotateSequence /> : null}

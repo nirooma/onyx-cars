@@ -1,7 +1,7 @@
 import { Geist, Heebo } from "next/font/google";
 
 /**
- * Visual language for NightGuard.
+ * Visual language for Stillward.
  *
  * Product design owns this file. Change colors, the light-bar accent,
  * chamfer size, or fonts here. Components read the CSS variables and

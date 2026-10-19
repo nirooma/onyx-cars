@@ -26,6 +26,18 @@ export async function generateMetadata({
         en: "/en",
       },
     },
+    openGraph: {
+      title: t.meta.title,
+      description: t.meta.description,
+      siteName: "Stillward",
+      type: "website",
+      locale: locale === "he" ? "he_IL" : "en_US",
+    },
+    twitter: {
+      card: "summary",
+      title: t.meta.title,
+      description: t.meta.description,
+    },
   };
 }
 
