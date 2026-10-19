@@ -219,17 +219,17 @@
 .hero-glow {
   position: absolute;
   z-index: 0;
-  right: 6%;
-  bottom: 16%;
-  left: 6%;
-  height: 34%;
+  right: 8%;
+  bottom: 8%;
+  left: 8%;
+  height: 28%;
   background: radial-gradient(
     ellipse at center,
-    rgba(242, 246, 255, 0.2),
-    rgba(237, 237, 235, 0.05) 42%,
+    rgba(242, 246, 255, 0.28),
+    rgba(237, 237, 235, 0.07) 38%,
     transparent 72%
   );
-  filter: blur(10px);
+  filter: blur(12px);
   pointer-events: none;
 }
 
@@ -244,19 +244,20 @@
 .hero-reflect {
   position: relative;
   z-index: 1;
-  display: block;
-  height: 0;
-  margin-top: -1%;
-  padding-bottom: 13%;
-  background-image: url("/assets/product/selected-design.jpg");
-  background-repeat: no-repeat;
-  background-position: center bottom;
-  background-size: 100% auto;
-  transform: scaleY(-1);
-  transform-origin: center center;
+  overflow: hidden;
+  height: clamp(4.75rem, 11vw, 8.75rem);
+  margin-top: -0.35rem;
   pointer-events: none;
-  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), transparent 74%);
-  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), transparent 74%);
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), transparent 80%);
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), transparent 80%);
+}
+
+.hero-reflect::before {
+  content: "";
+  display: block;
+  aspect-ratio: 1280 / 529;
+  background: url("/assets/product/selected-design.jpg") center / 100% 100% no-repeat;
+  transform: scaleY(-1);
 }
 
 .landing-foot {

@@ -52,7 +52,6 @@ export function Landing() {
             className="hero-product"
           />
           <div className="hero-reflect" aria-hidden="true" />
-          <figcaption className="sr-only">{t.concept}</figcaption>
         </figure>
       </main>
       <footer className="landing-foot">
