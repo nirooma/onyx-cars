@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { getDictionary } from "@/content";
 import { direction, isLocale, locales, type Locale } from "@/lib/i18n";
 import { brand } from "@/theme/brand";
-import { fontHebrew, fontLatin, themeCss } from "@/theme/theme";
+import { fontHebrew, fontLatin, fontMono, themeCss } from "@/theme/theme";
 import "../globals.css";
 
 export function generateStaticParams() {
@@ -73,7 +73,7 @@ export default async function LocaleLayout({
     <html
       lang={locale}
       dir={dir}
-      className={`${fontHebrew.variable} ${fontLatin.variable}`}
+      className={`${fontHebrew.variable} ${fontLatin.variable} ${fontMono.variable}`}
       suppressHydrationWarning
     >
       <body className={`${locale === "en" ? "font-display" : "font-sans"} antialiased`}>

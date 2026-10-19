@@ -539,33 +539,492 @@
   }
 }
 
-.rotate-pin {
+/* Capabilities. Sits after the hero. The hero rules above stay as signed off. */
+
+.cap-section {
   position: relative;
-  height: var(--rotate-pin, 400vh);
   background: #0B0A0D;
+  color: #EDEDEB;
 }
 
-.rotate-sticky {
+.cap-mono {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.cap-intro {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 40px;
+  align-items: center;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 72px 48px 40px;
+}
+
+.cap-intro::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: radial-gradient(ellipse 50% 45% at 70% 50%, rgba(242, 246, 255, 0.05), transparent 70%);
+  pointer-events: none;
+}
+
+.cap-intro > * {
+  position: relative;
+  z-index: 1;
+}
+
+.cap-eyebrow {
+  font-size: 11px;
+  color: #A1A1A6;
+  margin-bottom: 18px;
+}
+
+.cap-headline {
+  font-size: clamp(40px, 5vw, 64px);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+  margin-bottom: 16px;
+  color: #EDEDEB;
+}
+
+.cap-lede {
+  font-size: 16px;
+  color: #A1A1A6;
+  max-width: 28ch;
+  line-height: 1.5;
+}
+
+.cap-net {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1.2 / 1;
+  max-height: 420px;
+}
+
+.cap-net svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.cap-edge.is-hot {
+  stroke: rgba(242, 246, 255, 0.55);
+  stroke-dasharray: 12 88;
+  animation: cap-edge 2.6s linear infinite;
+}
+
+@keyframes cap-edge {
+  to {
+    stroke-dashoffset: -100;
+  }
+}
+
+.cap-node {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  pointer-events: none;
+}
+
+.cap-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #F2F6FF;
+  margin: 0 auto 6px;
+  box-shadow: 0 0 10px rgba(242, 246, 255, 0.4);
+  transition: box-shadow 0.3s, transform 0.3s;
+}
+
+.cap-node.core .cap-dot {
+  width: 14px;
+  height: 14px;
+  box-shadow: 0 0 22px 4px rgba(242, 246, 255, 0.45);
+  animation: cap-core 2.8s ease-in-out infinite;
+}
+
+@keyframes cap-core {
+  0%,
+  100% {
+    box-shadow: 0 0 22px 4px rgba(242, 246, 255, 0.45);
+  }
+  50% {
+    box-shadow: 0 0 28px 7px rgba(242, 246, 255, 0.7);
+  }
+}
+
+.cap-node-label {
+  font-size: 10px;
+  color: #A1A1A6;
+  white-space: nowrap;
+}
+
+.cap-node.core .cap-node-label {
+  color: #EDEDEB;
+  font-size: 11px;
+}
+
+.cap-node.is-live .cap-dot {
+  box-shadow: 0 0 20px 5px rgba(242, 246, 255, 0.7);
+  transform: scale(1.25);
+}
+
+.cap-node.is-live .cap-node-label {
+  color: #EDEDEB;
+}
+
+.cap-rail {
   position: sticky;
-  top: 0;
-  height: 100svh;
-  overflow: hidden;
-  background: #0B0A0D;
-}
-
-.rotate-canvas {
-  display: block;
-  width: 100%;
-  height: 100%;
-  background: #0B0A0D;
-}
-
-.rotate-poster {
+  top: 24px;
+  z-index: 20;
   display: none;
+  justify-content: center;
+  padding: 10px 0;
+  pointer-events: none;
+}
+
+.cap-rail.on {
+  display: flex;
+}
+
+.cap-pill {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  padding: 10px 20px;
+  background: rgba(11, 10, 13, 0.82);
+  border: 1px solid rgba(242, 246, 255, 0.1);
+  backdrop-filter: blur(12px);
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+  pointer-events: auto;
+}
+
+.cap-pill-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cap-pill-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(242, 246, 255, 0.35);
+  transition: background 0.3s, box-shadow 0.3s, transform 0.3s;
+}
+
+.cap-pill-dot.core {
+  width: 9px;
+  height: 9px;
+}
+
+.cap-pill-dot.on {
+  background: #F2F6FF;
+  box-shadow: 0 0 12px 2px rgba(242, 246, 255, 0.55);
+  transform: scale(1.3);
+}
+
+.cap-pill-label {
+  font-size: 9px;
+  color: rgba(161, 161, 166, 0.8);
+  margin-left: 4px;
+}
+
+.cap-panel {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(280px, 38%) 1fr;
+  gap: 40px 48px;
+  align-items: center;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 56px 48px;
+}
+
+.cap-section[data-reveal] .cap-panel {
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+
+.cap-section[data-reveal] .cap-panel:not(.is-in) {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.cap-panel.reverse {
+  grid-template-columns: 1fr minmax(280px, 38%);
+}
+
+.cap-panel.reverse .cap-visual {
+  order: 1;
+}
+
+.cap-panel.reverse .cap-copy {
+  order: 2;
+}
+
+.cap-copy {
+  padding: 8px 0;
+  max-width: 420px;
+}
+
+.cap-eye {
+  font-size: 11px;
+  color: rgba(161, 161, 166, 0.8);
+  margin-bottom: 14px;
+}
+
+.cap-head {
+  font-size: clamp(36px, 4.6vw, 60px);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+  margin-bottom: 14px;
+  color: #EDEDEB;
+}
+
+.cap-line {
+  font-size: 15px;
+  line-height: 1.5;
+  color: #A1A1A6;
+  margin-bottom: 22px;
+  max-width: 34ch;
+}
+
+.cap-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.cap-chip {
+  font-size: 11px;
+  color: #EDEDEB;
+  padding: 8px 12px;
+  background: #141416;
+  border: 1px solid rgba(242, 246, 255, 0.1);
+  border-radius: 4px;
+}
+
+.cap-chip.dim {
+  color: #A1A1A6;
+}
+
+.cap-chip.asp {
+  border-color: rgba(242, 246, 255, 0.06);
+  color: rgba(161, 161, 166, 0.78);
+}
+
+.cap-visual {
+  position: relative;
   width: 100%;
-  height: 100%;
-  object-fit: contain;
-  background: #0B0A0D;
+}
+
+.cap-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  background: #141416;
+  overflow: hidden;
+  border-radius: 5px;
+  border: 1px solid rgba(242, 246, 255, 0.06);
+}
+
+.cap-photo {
+  object-fit: cover;
+}
+
+.cap-frame.warm .cap-photo {
+  filter: brightness(1.06) saturate(0.92) sepia(0.08);
+}
+
+.cap-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.cap-box {
+  position: absolute;
+  border: 1.5px solid #F2F6FF;
+  box-shadow: 0 0 0 1px rgba(11, 10, 13, 0.3);
+}
+
+.cap-tag {
+  position: absolute;
+  left: 0;
+  top: -22px;
+  font-size: 10px;
+  padding: 3px 7px;
+  background: rgba(11, 10, 13, 0.85);
+  color: #F2F6FF;
+  border: 1px solid rgba(242, 246, 255, 0.25);
+  white-space: nowrap;
+}
+
+.cap-box.ignore {
+  border-color: rgba(161, 161, 166, 0.55);
+  border-style: dashed;
+}
+
+.cap-box.ignore .cap-tag {
+  color: #A1A1A6;
+  border-color: rgba(161, 161, 166, 0.3);
+}
+
+.cap-hud {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  font-size: 10px;
+  color: rgba(242, 246, 255, 0.55);
+}
+
+.cap-face {
+  position: absolute;
+  left: 38%;
+  top: 14%;
+  width: 12%;
+  height: 16%;
+  border-radius: 50%;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  background: rgba(20, 20, 22, 0.25);
+  border: 1px solid rgba(242, 246, 255, 0.15);
+}
+
+.cap-lock {
+  position: absolute;
+  left: 52%;
+  top: 14%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(11, 10, 13, 0.75);
+  border: 1px solid rgba(242, 246, 255, 0.2);
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+}
+
+.cap-lock svg {
+  width: 20px;
+  height: 20px;
+}
+
+.cap-veil {
+  position: absolute;
+  left: 34%;
+  top: 12%;
+  width: 18%;
+  height: 58%;
+  background: linear-gradient(180deg, rgba(11, 10, 13, 0.25), rgba(11, 10, 13, 0.05));
+}
+
+.cap-slider {
+  position: absolute;
+  inset: 0;
+  user-select: none;
+  touch-action: none;
+  cursor: ew-resize;
+}
+
+.cap-slider-lit {
+  position: absolute;
+  inset: 0;
+  clip-path: inset(0 calc(100% - var(--cap-pct, 50%)) 0 0);
+}
+
+.cap-slider-handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--cap-pct, 50%);
+  width: 2px;
+  background: #F2F6FF;
+  transform: translateX(-50%);
+  box-shadow: 0 0 12px rgba(242, 246, 255, 0.4);
+  pointer-events: none;
+}
+
+.cap-slider-handle::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(11, 10, 13, 0.85);
+  border: 1.5px solid #F2F6FF;
+  box-shadow: 0 0 16px rgba(242, 246, 255, 0.3);
+}
+
+.cap-cap {
+  position: absolute;
+  bottom: 14px;
+  font-size: 10px;
+  color: #A1A1A6;
+  padding: 4px 8px;
+  background: rgba(11, 10, 13, 0.7);
+}
+
+.cap-cap-l {
+  left: 14px;
+}
+
+.cap-cap-r {
+  right: 14px;
+  color: #F2F6FF;
+}
+
+@media (max-width: 900px) {
+  .cap-intro {
+    grid-template-columns: 1fr;
+    padding: 56px 20px 28px;
+  }
+
+  .cap-net {
+    max-height: 280px;
+  }
+
+  .cap-panel,
+  .cap-panel.reverse {
+    grid-template-columns: 1fr;
+    padding: 36px 20px;
+    gap: 20px;
+  }
+
+  .cap-panel .cap-visual,
+  .cap-panel.reverse .cap-visual {
+    order: 1;
+  }
+
+  .cap-panel .cap-copy,
+  .cap-panel.reverse .cap-copy {
+    order: 2;
+    padding: 8px 0 0;
+    margin: 0;
+    max-width: none;
+  }
+
+  .cap-head {
+    font-size: 34px;
+  }
+
+  .cap-rail {
+    top: 8px;
+  }
+
+  .cap-pill-label {
+    display: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -577,15 +1036,17 @@
     transform: none;
   }
 
-  .rotate-pin {
-    height: 100svh;
+  .cap-section[data-reveal] .cap-panel,
+  .cap-section[data-reveal] .cap-panel:not(.is-in) {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 
-  .rotate-canvas {
-    display: none;
-  }
-
-  .rotate-poster {
-    display: block;
+  .cap-edge,
+  .cap-node .cap-dot,
+  .cap-pill-dot {
+    animation: none;
+    transition: none;
   }
 }

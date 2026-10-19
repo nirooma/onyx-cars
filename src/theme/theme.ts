@@ -1,4 +1,4 @@
-import { Geist, Heebo } from "next/font/google";
+import { Geist, Heebo, IBM_Plex_Mono } from "next/font/google";
 
 /**
  * Visual language for Stillward.
@@ -57,6 +57,14 @@ export const fontHebrew = Heebo({
   subsets: ["hebrew", "latin"],
   weight: ["400", "500", "600"],
   variable: "--font-hebrew",
+  display: "swap",
+});
+
+/** Mono labels in the capabilities section. The hero stays on Geist. */
+export const fontMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-mono",
   display: "swap",
 });
 

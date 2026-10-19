@@ -28,7 +28,9 @@ Nothing here is deployed, and the site does not load analytics or other trackers
 
 ## What is on the page
 
-One English screen. The hero is the power-on film (`heroMedia` in `src/theme/images.ts`). Desktop plays the 1080p WebM, then the MP4. Viewports at 768px and below play the portrait WebM, then the portrait MP4. The video preloads (`preload="auto"`) behind the dark poster and starts as soon as it can play. It plays once, muted, and holds the last frame. The headline and call to action fade in at `lightOnTime` (1.9s), over 600ms. Reduced motion, a stall, or blocked autoplay shows `final-lit.jpg` (or the portrait still). The call to action is `Join the beta [TBD]`, a mailto with no address. A one-line “Concept renders” footer sits under it. There is no language switcher and the rendered page is left to right.
+One English page. The hero is the power-on film (`heroMedia` in `src/theme/images.ts`). Desktop plays the 1080p WebM, then the MP4. Viewports at 768px and below play the portrait WebM, then the portrait MP4. The video preloads (`preload="auto"`) behind the dark poster and starts as soon as it can play. It plays once, muted, and holds the last frame. The headline and call to action fade in at `lightOnTime` (1.9s), over 600ms. Reduced motion, a stall, or blocked autoplay shows `final-lit.jpg` (or the portrait still). The call to action is `Join the beta [TBD]`, a mailto with no address. A one-line “Concept renders” footer sits on the hero. There is no language switcher and the rendered page is left to right.
+
+Directly under the hero is the capabilities section (`Capabilities` in `src/components/capabilities.tsx`, copy in `src/content/capabilities.ts`). Five panels, a small network diagram, and a night-view slider. Proof chips are the approved strings in that file. Do not add identify or recognize-people claims, and do not add specs that are not already written there. Stills live in `public/assets/product/capabilities/`.
 
 The steps, problem, privacy, homeowners, monitoring centers, FAQ, form, and long footer components are unused. `DraftHome` in [`src/components/draft-home.tsx`](src/components/draft-home.tsx) still composes them. Hebrew copy remains in [`src/content/he.ts`](src/content/he.ts).
 
@@ -42,7 +44,9 @@ Product design owns two files. Components do not hard-code colors, fonts, or med
 | Chamfer, light bar, and facet-line behavior | [`src/theme/theme.css`](src/theme/theme.css) (uses the variables from `theme.ts`, no extra hues) |
 | Product stills and videos | [`src/theme/images.ts`](src/theme/images.ts) and the files in [`public/assets/product/`](public/assets/product/) |
 
-`heroMedia` names the power-on films, the dark posters, and the lit stills. `selected-design.jpg` remains the earlier studio still and is not the hero fallback. The open-shell sequence scrubs with scroll; reduced motion shows `exploded-view.jpg` instead. Do not add part labels or component specs to that section.
+`heroMedia` names the power-on films, the dark posters, and the lit stills. `selected-design.jpg` remains the earlier studio still and is not the hero fallback. The open-shell sequence in `inside.tsx` is unused. It scrubs with scroll; reduced motion shows `exploded-view.jpg`. Do not add part labels or component specs to that section.
+
+Keep video files under about 2 MB, except the four `hero-poweron-*` films. Those are the designer-approved high-quality hero set (desktop WebM 4.2 MB, MP4 6.4 MB; mobile WebM 2.2 MB, MP4 3.4 MB) and are capped at 8 MB each.
 
 ## Logo, icons and share image
 
@@ -52,22 +56,6 @@ The Stillward logo is final (v1.0, approved by product design). `brand` in [`src
 - Icons: `favicon.svg` (SVG icon), `favicon-32.png` (PNG fallback), `apple-touch-icon.png` (180), and `icon-512.png` in `/manifest.webmanifest` (`src/app/manifest.ts`). Theme colour `#0B0A0D`.
 - Share image: `public/og.jpg`, 1200x630, the lit final frame with the glow primary logo at a 44px cap height. It is used for `og:image` and `twitter:image` (`summary_large_image`). The absolute URL uses `NEXT_PUBLIC_SITE_URL` (default `http://localhost:4317`), so set it at build time for a real host.
 - Do not use the glow logo below 32px tall, and do not recolour the light bar or the red marks.
-
-## Drop in the 360° frames
-
-`rotateMedia` in [`src/theme/images.ts`](src/theme/images.ts) is the only config for the turn after the hero. The section is not rendered until every file below exists, so the live page stays the signed-off hero. Do not add stand-in frames.
-
-```text
-public/assets/product/rotate/desktop/frame_000.webp … frame_119.webp
-public/assets/product/rotate/desktop/poster.webp
-public/assets/product/rotate/mobile/frame_000.webp … frame_119.webp
-public/assets/product/rotate/mobile/poster.webp
-public/assets/product/rotate/scrub.mp4
-```
-
-`frame_000.webp` is frame 0. A count of 120 ends at `frame_119.webp`. Posters are the reduced-motion stills. `scrub.mp4` is the all-intra film that ships with the set; the page draws the WebP frames. Background is `rgb(11, 10, 13)`. After the files are in place, rebuild. The exploded view mounts after the rotation and stays unrendered (`explodedMedia.enabled` is false).
-
-Keep video files under about 2 MB, except the four `hero-poweron-*` films. Those are the designer-approved high-quality hero set (desktop WebM 4.2 MB, MP4 6.4 MB; mobile WebM 2.2 MB, MP4 3.4 MB) and are capped at 8 MB each.
 
 ## Pilot form
 
