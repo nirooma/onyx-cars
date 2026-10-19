@@ -6,7 +6,7 @@ import { RotateSequence } from "@/components/rotate-sequence";
 import { getDictionary } from "@/content";
 import { explodedSequenceReady, rotateSequenceReady } from "@/theme/rotate-ready";
 
-const pilotMail = "mailto:?subject=NightGuard%20beta%20%5BTBD%5D";
+const pilotMail = "mailto:?subject=Stillward%20beta%20%5BTBD%5D";
 
 export function Landing() {
   const t = getDictionary("en").hero;
