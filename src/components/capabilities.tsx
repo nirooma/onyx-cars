@@ -10,11 +10,14 @@ function clamp(value: number) {
   return Math.min(95, Math.max(5, value));
 }
 
+/** Night view leads on load. The one-shot hint returns here. */
+const SLIDER_REST = 70;
+
 function NightSlider({ revealed, reduced }: { revealed: boolean; reduced: boolean }) {
   const sliderRef = useRef<HTMLDivElement>(null);
   const dragging = useRef(false);
   const userMoved = useRef(false);
-  const [pct, setPct] = useState(50);
+  const [pct, setPct] = useState(SLIDER_REST);
   const panel = capabilities.panels[1];
 
   useEffect(() => {
@@ -24,7 +27,7 @@ function NightSlider({ revealed, reduced }: { revealed: boolean; reduced: boolea
     const tick = (now: number) => {
       if (userMoved.current) return;
       const t = Math.min(1, (now - start) / 1400);
-      setPct(50 + Math.sin(t * Math.PI) * 22);
+      setPct(SLIDER_REST + Math.sin(t * Math.PI) * 22);
       if (t < 1) frame = requestAnimationFrame(tick);
     };
     frame = requestAnimationFrame(tick);
@@ -233,30 +236,29 @@ export function Capabilities() {
               {panel.kind === "ai" ? (
                 <div className="cap-overlay" aria-hidden="true">
                   <span className="cap-hud cap-mono">Live · On-device</span>
-                  <div className="cap-box" style={{ left: "46%", top: "16%", width: "15%", height: "50%" }}>
+                  <div className="cap-box" style={{ left: "33%", top: "8%", width: "13%", height: "50%" }}>
                     <span className="cap-tag cap-mono">Person</span>
                   </div>
-                  <div className="cap-box ignore" style={{ left: "12%", top: "50%", width: "15%", height: "20%" }}>
+                  <div className="cap-box ignore" style={{ left: "11%", top: "45%", width: "12%", height: "14%" }}>
                     <span className="cap-tag cap-mono">Pet · ignored</span>
                   </div>
-                  <div className="cap-box ignore" style={{ left: "70%", top: "10%", width: "22%", height: "58%" }}>
-                    <span className="cap-tag cap-mono">Motion · ignored</span>
+                  <div className="cap-box ignore" style={{ left: "72%", top: "1%", width: "27%", height: "55%" }}>
+                    <span className="cap-tag cap-tag-in cap-mono">Motion · ignored</span>
                   </div>
                 </div>
               ) : null}
               {panel.kind === "privacy" ? (
                 <div className="cap-overlay" aria-hidden="true">
-                  <div className="cap-face" />
-                  <div className="cap-lock">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="#F2F6FF" strokeWidth="1.8" aria-hidden="true">
-                      <rect x="5" y="11" width="14" height="10" rx="2" />
-                      <path d="M8 11V8a4 4 0 0 1 8 0v3" />
-                    </svg>
-                  </div>
-                  <div className="cap-box" style={{ left: "34%", top: "12%", width: "18%", height: "58%", opacity: 0.55 }}>
+                  <div className="cap-face" style={{ left: "17%", top: "8%", width: "12%", height: "17%" }} />
+                  <div className="cap-box" style={{ left: "15%", top: "8%", width: "16%", height: "50%" }}>
                     <span className="cap-tag cap-mono">Person · face masked</span>
+                    <div className="cap-lock">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="#F2F6FF" strokeWidth="1.8" aria-hidden="true">
+                        <rect x="5" y="11" width="14" height="10" rx="2" />
+                        <path d="M8 11V8a4 4 0 0 1 8 0v3" />
+                      </svg>
+                    </div>
                   </div>
-                  <div className="cap-veil" />
                 </div>
               ) : null}
             </div>
