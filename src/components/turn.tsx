@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useId, useRef } from "react";
+import { turnFrame } from "./turn-motion";
 
 const ANGLES = [
   {
@@ -40,16 +41,12 @@ function srcSet(id: string, kind: "avif" | "webp") {
   return `${asset(id, kind, false)} 1x, ${asset(id, kind, true)} 2x`;
 }
 
-function smooth(value: number) {
-  const t = Math.min(1, Math.max(0, value));
-  return t * t * (3 - 2 * t);
-}
-
 export function Turn() {
   const sectionRef = useRef<HTMLElement>(null);
   const titleId = useId();
   const shotRefs = useRef<Array<HTMLImageElement | null>>([]);
   const labelRefs = useRef<Array<HTMLSpanElement | null>>([]);
+  const glowRef = useRef<HTMLDivElement>(null);
   const mobileRef = useRef(false);
 
   useEffect(() => {
@@ -64,20 +61,49 @@ export function Turn() {
     syncMobile();
     mobile.addEventListener("change", syncMobile);
 
+    const loadPicture = (img: HTMLImageElement, priority: "high" | "low") => {
+      if (img.getAttribute("src")) return;
+      const picture = img.parentElement;
+      picture?.querySelectorAll("source").forEach((source) => {
+        const srcset = source.getAttribute("data-srcset");
+        if (srcset) source.setAttribute("srcset", srcset);
+      });
+      const src = img.getAttribute("data-src");
+      if (!src) return;
+      img.fetchPriority = priority;
+      img.setAttribute("src", src);
+    };
+
+    const margin = Math.round(window.innerHeight * 1.5);
     let armed = false;
     const arm = () => {
       if (armed) return;
       armed = true;
-      shotRefs.current.slice(1).forEach((img) => {
-        if (!img) return;
-        img.decode?.().catch(() => {});
-      });
+      if (motion.matches) {
+        section.querySelectorAll<HTMLImageElement>(".turn-grid img").forEach((img) => {
+          loadPicture(img, "low");
+        });
+        return;
+      }
+      const first = shotRefs.current[0];
+      if (!first) return;
+      loadPicture(first, "high");
+      const rest = () => {
+        shotRefs.current.slice(1).forEach((img) => {
+          if (!img) return;
+          loadPicture(img, "low");
+          img.decode?.().catch(() => {});
+        });
+      };
+      const pending = first.decode?.();
+      if (pending) pending.then(rest).catch(rest);
+      else rest();
     };
     const early = new IntersectionObserver(
       (entries) => {
         if (entries.some((entry) => entry.isIntersecting)) arm();
       },
-      { rootMargin: "100% 0px" },
+      { rootMargin: `0px 0px ${margin}px 0px` },
     );
     early.observe(section);
 
@@ -88,44 +114,23 @@ export function Turn() {
       };
     }
 
-    const steps = ANGLES.length - 1;
     let frame = 0;
     const apply = () => {
       frame = 0;
       const rect = section.getBoundingClientRect();
       const distance = section.offsetHeight - window.innerHeight;
       const progress = distance <= 0 ? 0 : Math.min(1, Math.max(0, -rect.top / distance));
-      const narrow = mobileRef.current;
-      const hold = narrow ? 0.74 : 0.6;
-      const shift = narrow ? 5 : 12;
-      const grow = narrow ? 0.01 : 0.026;
-      const x = progress * steps;
-      const index = Math.min(steps - 1, Math.floor(x));
-      const local = x >= steps ? 1 : x - index;
-      const fade = local <= hold ? 0 : smooth((local - hold) / (1 - hold));
-
+      const pose = turnFrame(progress, mobileRef.current, ANGLES.length);
       shotRefs.current.forEach((img, shot) => {
-        const label = labelRefs.current[shot];
-        let opacity = 0;
-        let y = 0;
-        let scale = 1;
-        if (progress >= 1 && shot === steps) {
-          opacity = 1;
-        } else if (shot === index) {
-          opacity = 1 - fade;
-          y = fade * -shift;
-          scale = 1 + fade * grow;
-        } else if (shot === index + 1) {
-          opacity = fade;
-          y = (1 - fade) * shift;
-          scale = 1 + grow - fade * grow;
-        }
+        const state = pose.shots[shot];
         if (img) {
-          img.style.opacity = opacity.toFixed(3);
-          img.style.transform = `translate3d(0, ${y.toFixed(2)}px, 0) scale(${scale.toFixed(4)})`;
+          img.style.opacity = state.opacity.toFixed(3);
+          img.style.transform = `translate3d(0, 0, 0) scale(${state.scale.toFixed(4)})`;
         }
-        if (label) label.style.opacity = opacity.toFixed(3);
+        const label = labelRefs.current[shot];
+        if (label) label.style.opacity = state.label.toFixed(3);
       });
+      if (glowRef.current) glowRef.current.style.opacity = pose.glow.toFixed(3);
     };
     const onScroll = () => {
       if (!frame) frame = window.requestAnimationFrame(apply);
@@ -144,39 +149,32 @@ export function Turn() {
 
   return (
     <section className="turn-section" ref={sectionRef} aria-labelledby={titleId}>
-      <link
-        rel="preload"
-        as="image"
-        href={asset(ANGLES[0].id, "avif", true)}
-        type="image/avif"
-        imageSrcSet={srcSet(ANGLES[0].id, "avif")}
-      />
       <div className="turn-sticky">
         <h2 className="turn-kicker" id={titleId}>
           Stillward One, from every angle.
         </h2>
         <div className="turn-stage">
-          <div className="turn-glow" aria-hidden="true" />
-          <div className="turn-shots" aria-hidden="true">
-            {ANGLES.map((angle, index) => (
-              <picture key={angle.id}>
-                <source type="image/avif" srcSet={srcSet(angle.id, "avif")} />
-                <source type="image/webp" srcSet={srcSet(angle.id, "webp")} />
-                <img
-                  ref={(node) => {
-                    shotRefs.current[index] = node;
-                  }}
-                  className={index === 0 ? "turn-shot is-first" : "turn-shot"}
-                  src={asset(angle.id, "webp", true)}
-                  alt=""
-                  width={1920}
-                  height={1080}
-                  decoding="async"
-                  fetchPriority={index === 0 ? "high" : "low"}
-                  loading={index === 0 ? "eager" : "lazy"}
-                />
-              </picture>
-            ))}
+          <div className="turn-scaler">
+            <div className="turn-shots" aria-hidden="true">
+              <div className="turn-glow" ref={glowRef} aria-hidden="true" />
+              {ANGLES.map((angle, index) => (
+                <picture key={angle.id}>
+                  <source type="image/avif" data-srcset={srcSet(angle.id, "avif")} />
+                  <source type="image/webp" data-srcset={srcSet(angle.id, "webp")} />
+                  <img
+                    ref={(node) => {
+                      shotRefs.current[index] = node;
+                    }}
+                    className={index === 0 ? "turn-shot is-first" : "turn-shot"}
+                    data-src={asset(angle.id, "webp", true)}
+                    alt=""
+                    width={1920}
+                    height={1080}
+                    decoding="async"
+                  />
+                </picture>
+              ))}
+            </div>
           </div>
           <p className="turn-labels" aria-hidden="true">
             {ANGLES.map((angle, index) => (
@@ -196,15 +194,14 @@ export function Turn() {
           {GRID.map((angle) => (
             <figure key={angle.id}>
               <picture>
-                <source type="image/avif" srcSet={srcSet(angle.id, "avif")} />
-                <source type="image/webp" srcSet={srcSet(angle.id, "webp")} />
+                <source type="image/avif" data-srcset={srcSet(angle.id, "avif")} />
+                <source type="image/webp" data-srcset={srcSet(angle.id, "webp")} />
                 <img
-                  src={asset(angle.id, "webp", true)}
+                  data-src={asset(angle.id, "webp", true)}
                   alt={angle.alt}
                   width={1920}
                   height={1080}
                   decoding="async"
-                  loading="lazy"
                 />
               </picture>
               <figcaption>{angle.label}</figcaption>

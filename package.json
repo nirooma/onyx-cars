@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start -p 4317",
     "lint": "eslint",
-    "test": "node --experimental-strip-types --test src/lib/waitlist.test.ts src/theme/images.test.ts src/theme/brand.test.ts src/content/capabilities.test.ts"
+    "test": "node --experimental-strip-types --test src/lib/waitlist.test.ts src/theme/images.test.ts src/theme/brand.test.ts src/content/capabilities.test.ts src/components/turn-motion.test.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",

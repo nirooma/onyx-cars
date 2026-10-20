@@ -1374,6 +1374,11 @@
   aspect-ratio: 1920 / 1080;
 }
 
+.turn-scaler {
+  position: absolute;
+  inset: 0;
+}
+
 .turn-glow {
   position: absolute;
   z-index: 0;
@@ -1405,8 +1410,14 @@
   object-fit: contain;
   opacity: 0;
   transform: translate3d(0, 0, 0) scale(1);
+  transform-origin: 50% 83.3%;
   will-change: opacity, transform;
   pointer-events: none;
+}
+
+.turn-shot:not([src]),
+.turn-grid img:not([src]) {
+  visibility: hidden;
 }
 
 .turn-shot.is-first {
@@ -1452,15 +1463,41 @@
 
 @media (max-width: 768px) {
   .turn-sticky {
-    padding-inline: 0;
+    padding: 24px 0 20px;
   }
 
   .turn-kicker {
+    margin-bottom: 24px;
     padding-inline: 24px;
   }
 
   .turn-stage {
     width: 100%;
+    height: auto;
+    aspect-ratio: auto;
+  }
+
+  .turn-scaler {
+    position: relative;
+    inset: auto;
+    height: 0;
+    padding-bottom: 56%;
+    overflow: hidden;
+  }
+
+  .turn-shots {
+    inset: auto;
+    left: 50%;
+    bottom: calc(-14.81vw + 4px);
+    width: 158%;
+    height: auto;
+    aspect-ratio: 1920 / 1080;
+    transform: translateX(-50%);
+  }
+
+  .turn-labels {
+    position: relative;
+    margin-top: 24px;
   }
 
   .turn-note {
