@@ -149,7 +149,7 @@
   max-width: none;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 769px) {
   .brand-logo {
     height: 22px;
   }
@@ -202,7 +202,7 @@
   initial-value: 0px;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 769px) {
   .hero-title {
     font-size: clamp(44px, 3.6vw, 52px);
   }
@@ -433,7 +433,7 @@
   }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 769px) {
   .landing-nav {
     height: 5rem;
     padding-inline: 3.5rem;
@@ -561,7 +561,7 @@
   }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 769px) {
   .hero-screen {
     grid-template-columns: minmax(calc(44px * 7.4 + 5.25rem), min(calc(3.6vw * 7.4 + 5.25rem), calc(52px * 7.4 + 5.25rem))) minmax(0, 1fr);
   }
@@ -606,19 +606,47 @@
   }
 }
 
-@media (max-width: 1023px) and (min-height: 701px) {
+/* Top-aligned. 14rem is the widest cap that stays off the nose.
+   Narrower widths follow the nose measure and never go under 10rem. */
+@media (min-width: 769px) and (max-width: 1023px) {
+  .hero-reveal-copy {
+    align-self: start;
+    padding-top: 5.5rem;
+    padding-bottom: 2rem;
+  }
+
+  .hero-title {
+    font-size: clamp(40px, 4.6vw, 44px);
+  }
+
+  .hero-support {
+    max-width: min(14rem, max(10rem, calc(31.42vw - 3.5rem - 40px)));
+    text-wrap: pretty;
+  }
+
+  .hero-stat,
+  .hero-stat-source {
+    display: none;
+  }
+
+  .hero-actions {
+    margin-top: 4.5rem;
+  }
+}
+
+@media (max-width: 768px) and (min-height: 701px) {
   .hero-reveal-copy {
     top: 4.875rem;
   }
 }
 
-@media (max-width: 1023px) and (min-height: 900px) {
+@media (max-width: 768px) and (min-height: 900px) {
   .hero-title {
     margin-top: 0.85rem;
   }
 }
 
-@media (max-width: 1023px) {
+@media (max-width: 768px) {
   .nav-cta {
     display: none;
   }
@@ -645,7 +673,7 @@
   }
 }
 
-@media (max-width: 1023px) and (max-height: 640px) {
+@media (max-width: 768px) and (max-height: 640px) {
   .hero-title {
     margin-top: 0.9rem;
   }
@@ -663,7 +691,7 @@
   }
 }
 
-@media (max-width: 1023px) and (max-height: 700px) {
+@media (max-width: 768px) and (max-height: 700px) {
   .hero-reveal-copy {
     top: 3.9rem;
   }

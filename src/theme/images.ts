@@ -62,7 +62,7 @@ export function posterSrc(id: "heroVideo" | "explodeVideo") {
  * Power-on hero. Swap the film by editing this object and the files it
  * names. The player reads breakpoints, posters, and lightOnTime from here.
  *
- * Both cuts list WebM first with the MP4 as fallback. Mobile (max-width 1023px)
+ * Both cuts list WebM first with the MP4 as fallback. Mobile (max-width 768px)
  * uses the portrait files. Copy fades in at lightOnTime, when the bar is fully on.
  * Reduced motion, a stall, or blocked autoplay shows the lit still.
  */
@@ -103,5 +103,5 @@ export const heroMedia = {
   lightOnTime: 1.9,
 } as const;
 
-/** Portrait cut, including the 1023px boundary. */
-export const HERO_MOBILE_MQ = "(max-width: 1023px)";
+/** Portrait cut, including the 768px boundary. */
+export const HERO_MOBILE_MQ = "(max-width: 768px)";

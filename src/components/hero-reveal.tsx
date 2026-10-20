@@ -54,7 +54,7 @@ export function HeroReveal({
   }, []);
 
   useEffect(() => {
-    const mq = window.matchMedia("(max-width: 1023px)");
+    const mq = window.matchMedia("(max-width: 768px)");
     const apply = () => setCut(mq.matches ? "mobile" : "desktop");
     apply();
     mq.addEventListener("change", apply);
