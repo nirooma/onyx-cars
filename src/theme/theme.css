@@ -1480,16 +1480,15 @@
   .turn-scaler {
     position: relative;
     inset: auto;
-    height: 0;
-    padding-bottom: 56%;
-    overflow: hidden;
+    height: auto;
+    overflow: visible;
   }
 
   .turn-shots {
+    position: relative;
     inset: auto;
     left: 50%;
-    bottom: calc(-14.81vw + 4px);
-    width: 158%;
+    width: calc((100% - 24px) / (1648 / 1920));
     height: auto;
     aspect-ratio: 1920 / 1080;
     transform: translateX(-50%);
