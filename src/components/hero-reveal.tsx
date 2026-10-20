@@ -138,6 +138,7 @@ export function HeroReveal({
   const showFinal = holding || useStill || reduced;
   const showPoster = !showFinal && !presented;
   const plateAlt = showFinal ? stillAlt : "";
+  const sourceParts = statSource?.split("Jan–Jun");
 
   return (
     <>
@@ -150,11 +151,8 @@ export function HeroReveal({
             if (line === "Sees in the dark.") {
               return (
                 <span className="hero-line" key={line}>
-                  <span className="hero-phrase">{line}</span>
-                  <span className="hero-split">
-                    <span className="hero-keep">Sees in</span>{" "}
-                    <span className="hero-keep">the dark.</span>
-                  </span>
+                  <span className="hero-keep">Sees in</span>{" "}
+                  <span className="hero-keep">the dark.</span>
                   {trail}
                 </span>
               );
@@ -173,7 +171,15 @@ export function HeroReveal({
             {stat}
             {statSource && statHref ? (
               <a className="hero-stat-source" href={statHref} target="_blank" rel="noopener">
-                {statSource}
+                {sourceParts && sourceParts.length === 2 ? (
+                  <>
+                    {sourceParts[0]}
+                    <span className="hero-nobreak">Jan–Jun</span>
+                    {sourceParts[1]}
+                  </>
+                ) : (
+                  statSource
+                )}
               </a>
             ) : null}
           </p>
