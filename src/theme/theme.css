@@ -222,6 +222,7 @@
   font-size: clamp(1.0625rem, 1.2vw, 1.1875rem);
   font-weight: var(--ng-body-weight);
   line-height: 1.5;
+  text-wrap: pretty;
 }
 
 .hero-stat {
@@ -241,6 +242,7 @@
   text-decoration-line: underline;
   text-decoration-color: rgba(134, 134, 139, 0.55);
   text-underline-offset: 0.15em;
+  text-wrap: pretty;
 }
 
 .hero-nobreak {
@@ -604,8 +606,8 @@
   }
 }
 
-/* Top-aligned so the extra wrapped lines use the footer gap.
-   Widths keep the copy off the nose, the light bar, and the tyres. */
+/* Top-aligned. 16rem keeps the supporting line to five lines.
+   That width reaches the nose, and the stat would sit in the tyre. */
 @media (min-width: 769px) and (max-width: 1023px) {
   .hero-reveal-copy {
     align-self: start;
@@ -618,13 +620,12 @@
   }
 
   .hero-support {
-    max-width: min(13rem, calc(31.42vw - 3.5rem - 40px));
+    max-width: 16rem;
     text-wrap: pretty;
   }
 
-  .hero-stat,
-  .hero-stat-source {
-    max-width: 9.75rem;
+  .hero-stat {
+    display: none;
   }
 }
 
@@ -711,13 +712,19 @@
 }
 
 @media (max-width: 340px) and (max-height: 600px) {
+  .hero-bar {
+    margin-top: 0.15rem;
+  }
+
   .hero-title {
+    margin-top: 0.15rem;
     font-size: 1.75rem;
   }
 
   .hero-support {
+    margin-top: 0.35rem;
     font-size: 0.875rem;
-    line-height: 1.2;
+    line-height: 1.4;
   }
 }
 
