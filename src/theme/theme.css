@@ -722,12 +722,12 @@
   }
 
   .hero-title {
-    margin-top: 0.15rem;
+    margin-top: 8px;
     font-size: 1.75rem;
   }
 
   .hero-support {
-    margin-top: 0.35rem;
+    margin-top: 10px;
     font-size: 0.875rem;
     line-height: 1.4;
   }
