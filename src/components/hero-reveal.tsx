@@ -145,12 +145,27 @@ export function HeroReveal({
         <p className="eyebrow">{eyebrow}</p>
         <div className="light-bar hero-bar" aria-hidden="true" />
         <h1 className="hero-title">
-          {title.split(/(?<=\.)\s+/).map((line, index, lines) => (
-            <span className="hero-line" key={line}>
-              {line}
-              {index < lines.length - 1 ? " " : null}
-            </span>
-          ))}
+          {title.split(/(?<=\.)\s+/).map((line, index, lines) => {
+            const trail = index < lines.length - 1 ? " " : null;
+            if (line === "Sees in the dark.") {
+              return (
+                <span className="hero-line" key={line}>
+                  <span className="hero-phrase">{line}</span>
+                  <span className="hero-split">
+                    <span className="hero-keep">Sees in</span>{" "}
+                    <span className="hero-keep">the dark.</span>
+                  </span>
+                  {trail}
+                </span>
+              );
+            }
+            return (
+              <span className="hero-line hero-keep" key={line}>
+                {line}
+                {trail}
+              </span>
+            );
+          })}
         </h1>
         <p className="hero-support">{support}</p>
         {stat ? (
