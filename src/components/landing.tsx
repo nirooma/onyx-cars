@@ -31,6 +31,9 @@ export function Landing() {
             eyebrow={t.eyebrow}
             title={t.title}
             support={t.sub}
+            stat={t.stat}
+            statSource={t.statSource}
+            statHref={t.statHref}
             cta={`${t.cta} [TBD]`}
             href={pilotMail}
             videoLabel={t.videoLabel}

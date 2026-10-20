@@ -22,8 +22,11 @@ const en: Dictionary = {
   },
   hero: {
     eyebrow: "For villas, cottages, and ground-floor homes",
-    title: "It stands guard at night.",
+    title: "No install. Sees in the dark. Deters instantly.",
     sub: "It learns a normal night in your home, and when you are away it answers a person with light, a siren, and a photo on your phone.",
+    stat: "Burglaries of private homes and garden flats in Israel rose 37% in H1 2026, year on year.",
+    statSource: "Source: Moked Emun, Jan–Jun 2026 vs. H1 2025",
+    statHref: "https://www.ice.co.il/local-news/news/article/1119112",
     cta: "Join the beta",
     secondary: "How it works",
     note: "A working name. No price, no certification, and no launch date.",

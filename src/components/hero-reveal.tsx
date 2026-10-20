@@ -9,6 +9,9 @@ export function HeroReveal({
   eyebrow,
   title,
   support,
+  stat,
+  statSource,
+  statHref,
   cta,
   href,
   videoLabel,
@@ -17,6 +20,9 @@ export function HeroReveal({
   eyebrow: string;
   title: string;
   support: string;
+  stat?: string;
+  statSource?: string;
+  statHref?: string;
   cta: string;
   href: string;
   videoLabel: string;
@@ -138,8 +144,25 @@ export function HeroReveal({
       <div className={`hero-reveal-copy${copyOn || reduced ? " is-in" : ""}`}>
         <p className="eyebrow">{eyebrow}</p>
         <div className="light-bar hero-bar" aria-hidden="true" />
-        <h1 className="hero-title">{title}</h1>
+        <h1 className="hero-title">
+          {title.split(/(?<=\.)\s+/).map((line, index, lines) => (
+            <span className="hero-line" key={line}>
+              {line}
+              {index < lines.length - 1 ? " " : null}
+            </span>
+          ))}
+        </h1>
         <p className="hero-support">{support}</p>
+        {stat ? (
+          <p className="hero-stat">
+            {stat}{" "}
+            {statSource && statHref ? (
+              <a className="hero-stat-source" href={statHref} target="_blank" rel="noopener">
+                {statSource}
+              </a>
+            ) : null}
+          </p>
+        ) : null}
         <div className="hero-actions">
           <a className="btn btn-primary" href={href}>
             {cta}

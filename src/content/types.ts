@@ -16,6 +16,9 @@ export type Dictionary = {
     eyebrow: string;
     title: string;
     sub: string;
+    stat?: string;
+    statSource?: string;
+    statHref?: string;
     cta: string;
     secondary: string;
     note: string;
