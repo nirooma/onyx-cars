@@ -155,7 +155,7 @@ export function HeroReveal({
         <p className="hero-support">{support}</p>
         {stat ? (
           <p className="hero-stat">
-            {stat}{" "}
+            {stat}
             {statSource && statHref ? (
               <a className="hero-stat-source" href={statHref} target="_blank" rel="noopener">
                 {statSource}
