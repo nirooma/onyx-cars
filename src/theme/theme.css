@@ -193,10 +193,17 @@
 
 .hero-line {
   display: block;
+  text-wrap: balance;
+}
+
+@media (min-width: 1200px) {
+  .hero-title {
+    font-size: min(5rem, calc((30vw - 5.25rem - 6px) / 7.261));
+  }
 }
 
 .hero-support {
-  max-width: 28rem;
+  max-width: 31ch;
   margin-top: 1.25rem;
   color: var(--ng-body);
   font-size: clamp(1.0625rem, 1.2vw, 1.1875rem);
@@ -414,7 +421,7 @@
 
   .hero-screen {
     display: grid;
-    grid-template-columns: minmax(calc(7.5 * 3rem + 5.25rem), min(calc(7.5 * 4.8vw + 5.25rem), calc(7.5 * 5rem + 5.25rem))) minmax(0, 1fr);
+    grid-template-columns: minmax(16.5rem, 30vw) minmax(0, 1fr);
     align-items: center;
   }
 
@@ -579,7 +586,7 @@
   }
 }
 
-@media (max-width: 480px) and (max-height: 640px) {
+@media (max-height: 700px) {
   .hero-stat {
     display: none;
   }
