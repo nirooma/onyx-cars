@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Capabilities } from "@/components/capabilities";
 import { HeroReveal } from "@/components/hero-reveal";
+import { Turn } from "@/components/turn";
 import { Logo } from "@/components/logo";
 import { getDictionary } from "@/content";
 
@@ -45,6 +46,7 @@ export function Landing() {
         </footer>
       </div>
       <Capabilities />
+      <Turn />
     </>
   );
 }
