@@ -25,7 +25,7 @@ const en: Dictionary = {
     title: "Someone\u2019s always home.",
     sub: "It learns a normal night in your home, and when you are away it answers a person with light, a siren, and a photo on your\u00A0phone.",
     stat: "In 2025, 1 in 22 Israeli homes had a burglary or theft.",
-    statSource: "Source: Israel Central Bureau of Statistics (CBS), Personal Security Survey 2025",
+    statSource: "Source: CBS, Personal Security Survey 2025",
     statHref: "https://www.cbs.gov.il/en/mediarelease/Pages/2026/First-Findings-from-the-Personal-Security-Survey-2025.aspx",
     cta: "Join the beta",
     secondary: "How it works",
