@@ -207,10 +207,8 @@
     font-size: clamp(44px, 3.6vw, 52px);
   }
 
-  /* Whole sentences stay one line. "Sees in the dark." may break only
-     between the two kept phrases, never as a single leftover word. */
-  .hero-line.hero-keep,
-  .hero-line .hero-keep {
+  /* Each sentence stays on one line. */
+  .hero-line.hero-keep {
     white-space: nowrap;
   }
 }

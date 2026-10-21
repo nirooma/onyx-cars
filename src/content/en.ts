@@ -2,7 +2,7 @@ import type { Dictionary } from "./types";
 
 const en: Dictionary = {
   meta: {
-    title: "Stillward · It stands guard at night",
+    title: "Stillward · Someone\u2019s always home.",
     description:
       "A standalone night guard for villas, cottages, and ground-floor homes. It learns an ordinary night in the house, and when you are away it answers a person with light, a siren, and a photo on your phone. A beta.",
   },
@@ -22,7 +22,7 @@ const en: Dictionary = {
   },
   hero: {
     eyebrow: "For villas, cottages, and ground\u2011floor homes",
-    title: "No install. Sees in the dark. Deters instantly.",
+    title: "Someone\u2019s always home.",
     sub: "It learns a normal night in your home, and when you are away it answers a person with light, a siren, and a photo on your\u00A0phone.",
     stat: "Burglaries of private homes and garden flats in Israel rose 37% in H1 2026, year on year.",
     statSource: "Source: Moked Emun, Jan–Jun 2026 vs. H1 2025",
