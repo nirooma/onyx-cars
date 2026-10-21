@@ -138,7 +138,6 @@ export function HeroReveal({
   const showFinal = holding || useStill || reduced;
   const showPoster = !showFinal && !presented;
   const plateAlt = showFinal ? stillAlt : "";
-  const sourceParts = statSource?.split("Jan–Jun");
 
   return (
     <>
@@ -159,15 +158,7 @@ export function HeroReveal({
             {stat}
             {statSource && statHref ? (
               <a className="hero-stat-source" href={statHref} target="_blank" rel="noopener">
-                {sourceParts && sourceParts.length === 2 ? (
-                  <>
-                    {sourceParts[0]}
-                    <span className="hero-nobreak">Jan–Jun</span>
-                    {sourceParts[1]}
-                  </>
-                ) : (
-                  statSource
-                )}
+                {statSource}
               </a>
             ) : null}
           </p>
