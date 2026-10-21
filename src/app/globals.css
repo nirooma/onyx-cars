@@ -1,0 +1,72 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "../theme/theme.css";
+
+@theme inline {
+  --color-background: var(--ng-page);
+  --color-foreground: var(--ng-shell);
+  --color-card: var(--ng-card);
+  --color-card-foreground: var(--ng-shell);
+  --color-popover: var(--ng-card);
+  --color-popover-foreground: var(--ng-shell);
+  --color-primary: var(--ng-shell);
+  --color-primary-foreground: var(--ng-skirt);
+  --color-secondary: var(--ng-card);
+  --color-secondary-foreground: var(--ng-shell);
+  --color-muted: var(--ng-card);
+  --color-muted-foreground: var(--ng-shade);
+  --color-accent: var(--ng-card);
+  --color-accent-foreground: var(--ng-shell);
+  --color-destructive: var(--ng-alert);
+  --color-border: var(--ng-line);
+  --color-input: var(--ng-line);
+  --color-ring: var(--ng-light);
+  --color-shell: var(--ng-shell);
+  --color-shade: var(--ng-shade);
+  --color-skirt: var(--ng-skirt);
+  --color-page: var(--ng-page);
+  --color-lightbar: var(--ng-light);
+  --color-alert: var(--ng-alert);
+  --color-on-alert: var(--ng-on-alert);
+  --color-line: var(--ng-line);
+  --font-sans: var(--font-hebrew), sans-serif;
+  --font-display: var(--font-latin), var(--font-hebrew), sans-serif;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-2xl: 0px;
+  --radius-3xl: 0px;
+  --radius-4xl: 0px;
+}
+
+@layer base {
+  * {
+    border-color: var(--ng-line);
+  }
+
+  html {
+    background: var(--ng-page);
+  }
+
+  body {
+    background: var(--ng-page);
+    color: var(--ng-shell);
+    font-family: var(--font-sans), sans-serif;
+    text-rendering: optimizeLegibility;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ng-light);
+    outline-offset: 3px;
+  }
+
+  summary {
+    list-style: none;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+}
