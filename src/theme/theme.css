@@ -204,7 +204,8 @@
 
 @media (min-width: 769px) {
   .hero-title {
-    font-size: clamp(44px, 3.6vw, 52px);
+    /* Sized so the one-line lead stays ≥24px clear of the robot. */
+    font-size: clamp(43px, 2.75vw, 48px);
   }
 
   /* Each sentence stays on one line. */
